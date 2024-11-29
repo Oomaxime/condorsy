@@ -2,14 +2,12 @@
 
 Condorsy survey plateform
 
+Pour lancer l'application 🚀 :
 ```bash
-pyhton -m venv .venv
+docker-compose up
 ```
-
+Pout la stopper 🛑 :
 ```bash
-pip install -r requirements.txt
-```
-
-```bash
-python run.py
+Crtl+C
+docker-compose down
 ```
