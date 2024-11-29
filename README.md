@@ -15,3 +15,7 @@ Pour la stopper 🛑 :
 Crtl+C
 docker-compose down
 ```
+Pour ouvrir le terminal de mongodb :
+```
+docker exec -it db mongosh -u root -p pass
+```
