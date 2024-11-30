@@ -209,8 +209,24 @@ footer p {
     padding: 3rem;
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
+    gap: 2rem;
+}
+
+.page-login .left h1 {
+    font-size: 6.25rem;
+    font-weight: 500;
+    line-height: 70px;
+    color: #fff;
+}
+
+.page-login .left h2 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #fff;
+    max-width: 350px;
+    text-align: center;
 }
 
 .page-login .right {
@@ -220,6 +236,7 @@ footer p {
     padding: 3rem;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
@@ -236,8 +253,12 @@ footer p {
     font-weight: 500;
 }
 
+.page-login .right form p a {
+    text-decoration: underline;
+}
+
 .page-login .right form input {
-    padding: .75rem;
+    padding: 1rem;
     border-radius: 12px;
     border: 1px solid #333;
     background-color: transparent;
@@ -252,12 +273,13 @@ footer p {
 
 
 .page-login .right form button {
-    padding: .75rem;
+    padding: 1rem 40px;
     background-color: #000;
     color: #fff;
-    border-radius: 12px;
+    border-radius: var(--border-radius);
     font-size: 1.25rem;
     font-weight: 600;
+    border: 0;
     cursor: pointer;
 }
 
