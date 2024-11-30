@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <header>
+        <nav class="nav-left">
+            <a href="/">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo Condorcy">
+            </a>
+            <a href="/">
+                Home
+            </a>
+            <a href="/survey">
+                Survey
+            </a>
+            <a href="/create">
+                Create
+            </a>
+        </nav>
+        <nav class="nav-right">
+            <a href="/login">
+                Login
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+
+        {% endblock %}
+    </main>
+
+    <footer>
+        <h2>Condorcy</h2>
+        <div class="line"></div>
+        <p>&copy; 2024 Condorcy. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
