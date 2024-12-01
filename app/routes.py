@@ -15,3 +15,8 @@ def create_survey():
     return render_template('surveys/create.html')
 
 # Ajoutez vos autres routes ici...
+
+
+@main_bp.route('/account')
+def account():
+    return render_template('account.html', title='Account')
