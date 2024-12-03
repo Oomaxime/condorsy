@@ -60,6 +60,7 @@ img {
 
 .btn:hover {
     animation: vibrate 1.5s infinite;
+    background-color: #222121;
 }
 
 @keyframes vibrate {
@@ -109,6 +110,10 @@ header .nav-right {
 header .nav-right a {
     background-color: var(--color-green);
     color: #000;
+}
+
+header .nav-right a:hover {
+    background-color: #24cc8f;
 }
 
 /* ==================== FOOTER ==================== */
