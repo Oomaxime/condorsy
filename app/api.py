@@ -27,7 +27,6 @@ def index():
 #
 #
 #Fonction de création d'utilisateur
-@app.route('/submit', methods=['POST'])
 def creationUser():
 
     pseudo_= str(request.form.get('pseudo'))
@@ -62,7 +61,6 @@ def creationUser():
 #
 #
 #Fonction de supprésion d'utilisateur
-@app.route('/kill', methods=['POST'])
 def killUser():
 
     user_collection.update_one({ 'pseudo': global_data['pseudo']},
@@ -78,7 +76,6 @@ def killUser():
 #
 #
 #Fonction de modification d'utilisateur
-@app.route('/modif', methods=['POST'])
 def modUser():
 
     password_= str(request.form.get('password'))
@@ -94,7 +91,7 @@ def modUser():
     
     else:
         user_collection.update_one({ 'pseudo': global_data['pseudo']},
-                                    { "$unset": { "addresse": address_,
+                                    { "$set": { "addresse": address_,
                                                 "age": age_, 
                                                 "job": job_, 
                                                 "password":password_}})
@@ -106,8 +103,8 @@ def modUser():
 #
 #Fonction de création de survey
 #
-# ATTENTION !!! Bien penser à changer la valeur du champ 'champschoix' par la variable contenant le nombre de réponses possibles 
-@app.route('/creationForm', methods=['POST'])
+# ATTENTION !!! Bien penser à changer la valeur du champ 'champschoix' par la variable contenant 
+# le nombre de réponses possibles 
 def creationSurvey():
 
     champs_choix_ = 7
@@ -144,23 +141,28 @@ def creationSurvey():
 #
 #Fonction de modification du survey
 #
-#ATTENTION !!! Dans la fonction, l'id_ correspond à un bouton ayant pour nom 'button_id'. Le bouton devra porter ce nom, et avoir pour value l'id du survey
-@app.route('/modificationForm', methods=['POST'])
+#ATTENTION !!! Dans la fonction, l'id_ correspond à un bouton ayant pour nom 'button_id'. 
+# Le bouton devra porter ce nom, et avoir pour value l'id du survey
 def modificationSurvey():
 
 
     id_ = request.form.get('button_id')
-    champs_choix_ = len(questions_collection.keys())
+    document = questions_collection.find_one({"_id": ObjectId(id_)})
+    champs_choix_ = len(document.get("choix", []))
+
 
     question_ = str(request.form.get('question'))
     description_ = str(request.form.get('description'))
 
-    questions_collection.update_one({ '_id': id_},  { "$unset": { "question": question_,
+    questions_collection.update_one({ '_id': id_},  { "$set": { "question": question_,
                                                                   "description": description_}})
+    
+    questions_collection.update_one({ "_id": id_},{"$unset" : {"choix": ""}})
 
     for k in range(champs_choix_):
                 choix = str(request.form.get(f'{k}'))
-                questions_collection.update_one({ "creator": creator_},{"$push" : {"choix": choix}})
+
+                questions_collection.update_one({ "_id": id_},{"$push" : {"choix": choix}})
 
 
     return render_template('survey.html')
@@ -171,12 +173,13 @@ def modificationSurvey():
 #
 #Fonction de gestion des formulaires
 #
-#ATTENTION !!! La fonction pseudo contient le name de la zone de texte. Elle doit obligatoirement se trouver dans un form pour être analysée
-@app.route('/gestionForm', methods=['POST'])
+#ATTENTION !!! La fonction text_id contient le name de la zone de texte ('<text area name="...">). Ce texte aura pour valeur l'id du survey. 
+# Elle doit obligatoirement se trouver dans un form pour être analysée
 def gestionForm():
-    pseudo_ = request.form.get('pseudo')
-    survey_ = questions_collection.find({pseudo_})
-    survey_['dépouillage'] = True
+
+    id_ = request.form.get('text_id')
+    survey_ = questions_collection.find({"id": id_})
+    survey_['dépouillage'] = False
 
     
     for surveys_ in survey_:
@@ -193,5 +196,116 @@ def gestionForm():
 
 
 
+#
+#
+#Fonction de gestion des formulaires
+#
+# Même règle que pour la fonction gestionForm concernant le button_id. La fonction fait ici le retour 
+# dans une chaine de caractères les choix de l'utilisateur en fonction de l'ordre choisi. 
+# L'ordre sera afficher sous cet ordre dans la variable document['ordre']: x>y>z>p=s>c
+def affichageReponses():
+
+    id_u = user_collection.find_one({'pseudo': global_data['pseudo']})
+
+    id_ = request.form.get('button_id')
+    document = questions_collection.find_one({"_id": ObjectId(id_), "reponses.user_id": id_u})
+
+    for reponse in document['reponse']:
+        if isinstance(reponse, list):
+            for egalite in reponse:
+                if document['ordre']:
+                    document['ordre'] += '='
+                document['ordre'] += egalite
+        else:
+            if document['ordre']:
+                document['ordre'] += '>'
+            document['ordre'] += reponse
+            
+    
+    return document
+
+
+
+#
+#
+#Fonction de participation aux sondages
+#
+#Même règle que pour la fonction gestionForm concernant le button_id. 'classement' correspond au name de la textarea. La fonction récupère ici 
+#une zone de texte contenant les préférences de l'utilisateur en terme de choix.
+def participationReponses():
+
+    id = request.form.get('button_id')
+    classement = request.form.get('classement')
+    classement = classement.replace(" ", "")
+    reponseU = questions_collection.find_one({'pseudo': global_data['pseudo']}, {"id": 1})
+
+    resultat = []
+
+    rep = classement.split('>')
+
+    for reps in rep:
+        if '=' in reps:
+            resultat.append([str(reps) for reps in reps.split('=')])
+        else:
+            resultat.append(str(reps))
+
+    questions_collection._update({"_id": ObjectId(id)}, {"reponses.user_id": reponseU, "reponse": resultat})
+
+
+
+
+# Fonction d'affichage des reponses
+#
+#Même règle que pour la fonction gestionForm concernant le button_id. La fonction fait ici le retour des réponses de l'utilisateur
+def affichageReponses():
+
+    id_u = user_collection.find_one({'pseudo': global_data['pseudo']})
+
+    id_ = request.form.get('button_id')
+    document = questions_collection.find_one({"_id": ObjectId(id_), "reponses.user_id": id_u})
+
+    for reponse in document['reponse']:
+        if isinstance(reponse, list):
+            for egalite in reponse:
+                if document['ordre']:
+                    document['ordre'] += '='
+                document['ordre'] += egalite
+        else:
+            if document['ordre']:
+                document['ordre'] += '>'
+            document['ordre'] += reponse
+            
+    
+    return document
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=4000)
+
+
+
+
+# Fonction d'envoi des réponses de l'utilisateur
+#
+# Cette fonction récupère les réponses de l'utilisateur et les envoie dans la base de données, 
+# lors de sa première participation à un sondage. 'choix' correspond au name de la zone de texte.
+
+def participationForm():
+
+    id = request.form.get('choix')
+    id = id.replace(" ", "")
+
+    resultat = []
+
+    rep = id.split('>')
+
+    for reps in rep:
+        if '=' in reps:
+            resultat.append([str(reps) for reps in reps.split('=')])
+        else:
+            resultat.append(str(reps))
+
+    questions_collection.insert_one({"reponses": {
+            "user_id": global_data['id'], 
+            "reponse": resultat
+        }})
