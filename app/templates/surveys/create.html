@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block title %}Créer un sondage - Condorsy{%
+endblock %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/pages/survey.css') }}"
+/>
+{% endblock %} {% block content %}
+<div class="survey-create">
+  <h1>Créer un nouveau sondage</h1>
+
+  <form id="survey-form" class="form">
+    <div class="form-group">
+      <label for="question">Question</label>
+      <input type="text" id="question" name="question" required />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="4"></textarea>
+    </div>
+
+    <div id="choices-container">
+      <label>Choix</label>
+      <div class="choice-inputs">
+        <input type="text" name="choices[]" required />
+        <input type="text" name="choices[]" required />
+      </div>
+      <button type="button" id="add-choice" class="btn btn-secondary">
+        Ajouter un choix
+      </button>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Créer le sondage</button>
+  </form>
+</div>
+{% endblock %} {% block extra_js %}
+<script src="{{ url_for('static', filename='js/components/survey-form.js') }}"></script>
+{% endblock %}

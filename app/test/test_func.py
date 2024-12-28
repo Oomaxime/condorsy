@@ -1,24 +1,25 @@
-from typing import Union
 import pytest
+from app import create_app
+from app.models import add_document, get_all_documents
 
-def reverse_sentence(sentence: Union[str, list]) -> Union[str, list]:
-  mysentence = sentence
-  revertsentence = mysentence[::-1]
-  print(revertsentence)
-  return revertsentence
+@pytest.fixture
+def client():
+    app = create_app('testing')
+    with app.test_client() as client:
+        yield client
 
-def test_reverse_sentence():
-    assert reverse_sentence("hello") == "olleh"
-    assert reverse_sentence([1,2,3,4,5]) == [5,4,3,2,1]
+def test_create_survey(client):
+    # Test de création de sondage
+    pass
 
+def test_get_surveys(client):
+    # Test de récupération de sondages
+    pass
 
-def test_reverse_multiple():
-   with pytest.raises(TypeError):
-       reverse_sentence(123)
-       reverse_sentence(1.23)
-       reverse_sentence(True)
-       reverse_sentence(None)
-       reverse_sentence({1,2,3})
-       reverse_sentence({"a":1, "b":2}) 
-       reverse_sentence((1,2,3))
-       reverse_sentence(1+2j)
+def test_update_survey(client):
+    # Test de mise à jour d'un sondage
+    pass
+
+def test_delete_survey(client):
+    # Test de suppression d'un sondage
+    pass
