@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request, make_response
 from app.models import surveys_collection, users_collection
 from datetime import datetime, timezone
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token
 
 api = Blueprint('api', __name__)
 
@@ -39,28 +40,22 @@ def create_survey():
 @api.route('/api/signup', methods=['POST'])
 def signup():
     data = request.get_json()
-    required_fields = ['username', 'email', 'password', 'first_name', 'last_name']
+    required_fields = ['pseudo', 'password', 'age', 'addresse', 'job']
     if not all(field in data for field in required_fields):
         return jsonify({'error': 'Missing required fields'}), 400
 
     # on verrif si l'user existe
-    if users_collection.find_one({'username': data['username']}):
-        return jsonify({'error': 'Username already exists'}), 409
-
-    if users_collection.find_one({'email': data['email']}):
-        return jsonify({'error': 'Email already exists'}), 409
+    if users_collection.find_one({'pseudo': data['pseudo']}):
+        return jsonify({'error': 'pseudo already exists'}), 409
 
     # on l'ajoute a la bdd
     user = {
-        'username': data['username'],
-        'email': data['email'],
+        'pseudo': data['pseudo'],
         'password': generate_password_hash(data['password']),
-        'first_name': data['first_name'],
-        'last_name': data['last_name'],
         'age': data.get('age'),
-        'address': data.get('address'),
+        'addresse': data.get('addresse'),
         'job': data.get('job'),
-        'created_at': datetime.now(timezone.utc)
+        'admin': data.get('admin', False)
     }
 
     result = users_collection.insert_one(user)
@@ -70,13 +65,31 @@ def signup():
 @api.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
-    required_fields = ['username', 'password']
+    required_fields = ['pseudo', 'password']
     if not all(field in data for field in required_fields):
         return jsonify({'error': 'Missing required fields'}), 400
 
     # verif users par nom
-    user = users_collection.find_one({'username': data['username']})
+    user = users_collection.find_one({'pseudo': data['pseudo']})
     if not user or not check_password_hash(user['password'], data['password']):
-        return jsonify({'error': 'Invalid username or password'}), 401
+        return jsonify({'error': 'Invalid pseudo or password'}), 401
+    
+    # On retourne le token et les infos de l'utilisateur (sans le mot de passe)
+    user_data = {
+        'pseudo': user['pseudo'],
+        'age': user['age'],
+        'addresse': user['addresse'],
+        'job': user['job'],
+        'admin': user['admin']
+    }
 
-    return jsonify({'message': f'Welcome {user["username"]}!'}), 200
+    # Création du token JWT
+    access_token = create_access_token(
+        identity=str(user['_id']),
+        additional_claims=user_data
+    )
+    
+    return jsonify({
+        'token': access_token,
+        'user': user_data
+    }), 200
