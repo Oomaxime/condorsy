@@ -1,12 +1,12 @@
 # requèete MongoDB pour UC10/11
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-from datetime import datetime
 
 client = MongoClient("mongodb://mongodb:27017/")
 db = client["condorcy"]
 surveys_collection = db["surveys"]
 users_collection = db["users"]
+
 
 def get_top_surveys_by_participants():
     pipeline = [
@@ -20,20 +20,29 @@ def get_top_surveys_by_participants():
     ]
     return list(surveys_collection.aggregate(pipeline))
 
+
 def get_votes_by_birth_year(survey_id):
+    # Récupération du scrutin spécifié
     survey = surveys_collection.find_one({"_id": ObjectId(survey_id)})
+    if not survey:
+        return {"error": "Survey not found"}
+
+    # Récupération des utilisateurs ayant participé
     user_ids = [response["user_id"] for response in survey["reponses"]]
     users = users_collection.find({"_id": {"$in": user_ids}})
-    current_year = datetime.now().year
-    age_to_birth_year = {user["_id"]: current_year - user["age"] for user in users}
 
+    # Calcul des votes par année de naissance
     birth_year_votes = {}
-    for response in survey["reponses"]:
-        birth_year = age_to_birth_year[response["user_id"]]
-        birth_year_votes.setdefault(birth_year, [])
-        birth_year_votes[birth_year].extend(response["reponse"])
+    for user in users:
+        birth_year = user["date_of_birth"].year
+        birth_year_votes.setdefault(birth_year, 0)
+        # Compter les réponses pour chaque année
+        for response in survey["reponses"]:
+            if response["user_id"] == user["_id"]:
+                birth_year_votes[birth_year] += len(response["reponse"])
 
     return birth_year_votes
+
 
 def get_average_choices():
     pipeline = [

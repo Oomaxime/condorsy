@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Condorcy{% endblock %}</title>
+    <title>{% block title %}condorcy{% endblock %}</title>
 
     <link
       rel="stylesheet"
@@ -15,10 +15,32 @@
     />
   </head>
   <body>
+    <header>
+      <nav class="nav-left">
+        <a href="/">
+          <img
+            src="{{ url_for('static', filename='images/logo.svg') }}"
+            alt="Logo Condorcy"
+          />
+        </a>
+        <a href="/"> Home </a>
+        <a href="/survey"> Survey </a>
+        <a href="/create"> Create </a>
+      </nav>
+      <nav class="nav-right">
+        <a href="/login" class="btn"> Login </a>
+      </nav>
+    </header>
+
     <main class="container">{% block content %}{% endblock %}</main>
 
     <script src="{{ url_for('static', filename='js/utils/api.js') }}"></script>
     <script src="{{ url_for('static', filename='js/services/auth.service.js') }}"></script>
     {% block extra_js %}{% endblock %}
   </body>
+  <footer>
+    <h2>Condorcy</h2>
+    <div class="line"></div>
+    <p>&copy; 2024 Condorcy. All Rights Reserved.</p>
+  </footer>
 </html>

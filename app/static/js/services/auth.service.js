@@ -7,7 +7,7 @@ const AuthService = {
           "Content-Type": "application/json",
           "Cache-Control": "no-cache", // Désactiver le cache
         },
-        body: JSON.stringify({ pseudo, password }),
+        body: JSON.stringify({pseudo, password}),
       });
 
       if (!response.ok) {
@@ -40,7 +40,7 @@ const AuthService = {
     const payload = JSON.parse(atob(token.split(".")[1]));
     return {
       pseudo: payload.pseudo,
-      age: payload.age,
+      date_of_birth: payload.date_of_birth,
       addresse: payload.addresse,
       job: payload.job,
       admin: payload.admin,
@@ -54,12 +54,4 @@ const AuthService = {
   isAuthenticated() {
     return !!this.getToken();
   },
-<<<<<<< HEAD
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> a8a4ff4 (merge a la mains)
-=======
-};
->>>>>>> origin/7-préparation-requête-admin-uc10-11

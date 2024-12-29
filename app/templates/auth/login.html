@@ -1,18 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 {% extends "authLayout.html" %} {% block content %}
 <div class="form-container">
   <h3>Login</h3>
-=======
-{% extends "base.html" %} {% block content %}
-<div class="auth-container">
-  <h1>Connexion</h1>
->>>>>>> 73ef767 (merge a la mains)
-=======
-{% extends "base.html" %} {% block content %}
-<div class="auth-container">
-  <h1>Connexion</h1>
->>>>>>> origin/7-préparation-requête-admin-uc10-11
 
   <form id="login-form" class="form" method="post">
     <div class="form-group">
@@ -29,24 +17,10 @@
 
     <button type="submit" class="btn btn-primary">Se connecter</button>
   </form>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
   <a href="{{ url_for('main.register') }}">Créer un compte</a>
-=======
->>>>>>> 73ef767 (merge a la mains)
-=======
->>>>>>> origin/7-préparation-requête-admin-uc10-11
 </div>
 {% endblock %} {% block extra_js %}
 <script src="{{ url_for('static', filename='js/services/auth.service.js') }}"></script>
 <script src="{{ url_for('static', filename='js/pages/login.js') }}"></script>
-<<<<<<< HEAD
-<<<<<<< HEAD
 {% endblock %}
-=======
-{% endblock %}
->>>>>>> 73ef767 (merge a la mains)
-=======
-{% endblock %}
->>>>>>> origin/7-préparation-requête-admin-uc10-11

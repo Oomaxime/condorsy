@@ -19,9 +19,3 @@ class Survey:
         self.end_date = end_date
         self.created_at = datetime.now(UTC)
         self.responses = []
-
-try:
-    client.server_info() #tentative de connexion
-    print("Connexion réussie à MongoDB !")
-except Exception as e:
-    print(f"Erreur de connexion à MongoDB : {e}")
