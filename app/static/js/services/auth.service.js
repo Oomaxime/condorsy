@@ -54,4 +54,8 @@ const AuthService = {
   isAuthenticated() {
     return !!this.getToken();
   },
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> a8a4ff4 (merge a la mains)
