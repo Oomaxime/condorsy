@@ -4,7 +4,7 @@ services:
     hostname: test_mongodb
     container_name: db
     environment:
-      - MONGO_INITDB_DATABASE=condorcy
+      - MONGO_INITDB_DATABASE=condorsy
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=pass
     ports:
@@ -22,7 +22,7 @@ services:
     volumes:
       - .:/app
     environment:
-      - MONGO_URI=mongodb://root:pass@mongodb:27017/condorcy?authSource=admin
+      - MONGO_URI=mongodb://root:pass@mongodb:27017/condorsy?authSource=admin
 
 volumes:
   mongodb_data:
