@@ -10,10 +10,18 @@ def login():
 def register():
     return render_template('auth/register.html', title='register')
 
+@main_bp.route('/login')
+def login():
+    return render_template('login.html', title='Login')
+
 @main_bp.route('/surveys/create', methods=['GET'])
 def create_survey():
     return render_template('surveys/create.html')
 
+@main_bp.route('/account')
+def account():
+    return render_template('account.html', title='Account')
+  
 @main_bp.route('/home')
 def home():
     return render_template('base.html', title='home')
