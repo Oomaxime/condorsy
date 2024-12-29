@@ -33,7 +33,46 @@ const SurveyAPI = {
   },
 };
 
-// Exemple d'utilisation dans un formulaire de création de sondage
+const ApiClient = {
+  async request(url, options = {}) {
+    const token = AuthService.getToken();
+
+    const defaultHeaders = {
+      "Content-Type": "application/json",
+    };
+
+    if (token) {
+      defaultHeaders["Authorization"] = `Bearer ${token}`;
+    }
+
+    const config = {
+      ...options,
+      headers: {
+        ...defaultHeaders,
+        ...options.headers,
+      },
+    };
+
+    try {
+      const response = await fetch(url, config);
+
+      if (response.status === 401) {
+        AuthService.logout();
+        throw new Error("Session expirée");
+      }
+
+      if (!response.ok) {
+        throw new Error("Erreur réseau");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Erreur API:", error);
+      throw error;
+    }
+  },
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const surveyForm = document.querySelector("#survey-form");
   if (surveyForm) {
