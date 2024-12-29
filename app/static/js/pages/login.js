@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+console.log("login.js est exécuté !");
+>>>>>>> 73ef767 (merge a la mains)
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   const errorDiv = document.querySelector(".form-error");
@@ -22,3 +26,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+<<<<<<< HEAD
+=======
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Page chargée et script chargé !");
+  const loginForm = document.getElementById("login-form");
+  if (!loginForm) {
+    console.error("Formulaire de login introuvable !");
+    return;
+  }
+});
+>>>>>>> 73ef767 (merge a la mains)
