@@ -2,6 +2,8 @@ import os
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+from pymongo import MongoClient
+from config import Config
 
 def create_app():
     app = Flask(__name__)
@@ -21,3 +23,11 @@ def create_app():
     app.register_blueprint(api)
 
     return app
+
+try:
+    client = MongoClient(Config.MONGO_URI)
+    db = client['condorsy']
+    # Si la connexion réussit, afficher un message
+    print("Connexion à MongoDB réussie!")
+except Exception as e:
+    print("Erreur de connexion à MongoDB:", e)
