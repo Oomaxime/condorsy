@@ -22,7 +22,7 @@ services:
     volumes:
       - .:/app
     environment:
-      - MONGO_URI=mongodb://root:pass@mongodb:27017/condorsy?authSource=root
+      - MONGO_URI=mongodb://root:pass@mongodb:27017/condorsy?authSource=admin
 
 volumes:
   mongodb_data:

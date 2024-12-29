@@ -55,7 +55,11 @@ const AuthService = {
     return !!this.getToken();
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
 };
 =======
 };
 >>>>>>> a8a4ff4 (merge a la mains)
+=======
+};
+>>>>>>> origin/7-préparation-requête-admin-uc10-11
