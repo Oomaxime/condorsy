@@ -1,4 +1,3 @@
-console.log("login.js est exécuté !");
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   const errorDiv = document.querySelector(".form-error");
@@ -23,12 +22,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("Page chargée et script chargé !");
-  const loginForm = document.getElementById("login-form");
-  if (!loginForm) {
-    console.error("Formulaire de login introuvable !");
-    return;
-  }
-});
-

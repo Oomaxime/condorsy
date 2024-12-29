@@ -39,10 +39,10 @@ def create_survey():
 
 
 # Créer un utilisateur
-@api.route('/api/signup', methods=['POST'])
-def signup():
+@api.route('/api/register', methods=['POST'])
+def register():
     data = request.get_json()
-    required_fields = ['pseudo', 'password', 'age', 'addresse', 'job']
+    required_fields = ['pseudo', 'password', 'password_confirm', 'date_of_birth', 'addresse', 'job']
     if not all(field in data for field in required_fields):
         return jsonify({'error': 'Missing required fields'}), 400
 
@@ -54,9 +54,9 @@ def signup():
     user = {
         'pseudo': data['pseudo'],
         'password': data['password'],  # Stockage en clair
-        'age': data.get('age'),
-        'addresse': data.get('addresse'),
-        'job': data.get('job'),
+        'date_of_birth': data['date_of_birth'],
+        'addresse': data['addresse'],
+        'job': data['job'],
         'admin': data.get('admin', False)
     }
 

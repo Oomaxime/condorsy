@@ -17,6 +17,8 @@
 
     <button type="submit" class="btn btn-primary">Se connecter</button>
   </form>
+
+  <a href="{{ url_for('main.register') }}">Créer un compte</a>
 </div>
 {% endblock %} {% block extra_js %}
 <script src="{{ url_for('static', filename='js/services/auth.service.js') }}"></script>

@@ -6,6 +6,10 @@ main_bp = Blueprint('main', __name__)
 def login():
     return render_template('auth/login.html', title='login')
 
+@main_bp.route('/register', methods=['GET', 'POST'])
+def register():
+    return render_template('auth/register.html', title='register')
+
 @main_bp.route('/surveys/create', methods=['GET'])
 def create_survey():
     return render_template('surveys/create.html')
