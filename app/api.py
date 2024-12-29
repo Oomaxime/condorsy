@@ -1,12 +1,16 @@
-from flask import Blueprint, jsonify, request, make_response
+from flask import Flask, Blueprint, jsonify, request, make_response
 from app.models import surveys_collection, users_collection
 from datetime import datetime, timezone
 from flask_jwt_extended import create_access_token
+from app.queries import get_top_surveys_by_participants, get_votes_by_birth_year, get_average_choices
+
+
 
 api = Blueprint('api', __name__)
 
-
+################################
 # Récupérer les surveys
+################################
 @api.route('/api/surveys', methods=['GET'])
 def get_surveys():
     surveys = list(surveys_collection.find())
@@ -14,8 +18,9 @@ def get_surveys():
         survey['_id'] = str(survey['_id'])
     return jsonify(surveys), 200
 
-
+################################
 # Créer un survey
+################################
 @api.route('/api/surveys', methods=['POST'])
 def create_survey():
     data = request.get_json()
@@ -37,8 +42,9 @@ def create_survey():
     result = surveys_collection.insert_one(survey)
     return jsonify({'id': str(result.inserted_id)}), 201
 
-
+################################
 # Créer un utilisateur
+################################
 @api.route('/api/signup', methods=['POST'])
 def signup():
     data = request.get_json()
@@ -63,7 +69,9 @@ def signup():
     result = users_collection.insert_one(user)
     return jsonify({'id': str(result.inserted_id)}), 201
 
-
+################################
+# Connexion (voir dans init-db.js pour les mdp/pseudo)
+################################
 @api.route('/api/login', methods=['POST'])
 def login():
     try:
@@ -105,3 +113,32 @@ def login():
     except Exception as e:
         print(f"Erreur lors du traitement de la requête: {e}")
         return jsonify({'error': 'Internal Server Error'}), 500
+
+
+################################
+# UC 10/11 - Dashboard Admin
+################################
+
+@api.route('/api/surveys/top', methods=['GET'])
+def top_surveys():
+    try:
+        data = get_top_surveys_by_participants()
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@api.route('/api/surveys/<survey_id>/votes_by_year', methods=['GET'])
+def votes_by_year(survey_id):
+    try:
+        data = get_votes_by_birth_year(survey_id)
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@api.route('/api/surveys/average_choices', methods=['GET'])
+def average_choices():
+    try:
+        data = get_average_choices()
+        return jsonify({"average_choices": data}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

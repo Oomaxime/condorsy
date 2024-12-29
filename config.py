@@ -2,7 +2,7 @@ import os
 
 class Config:
     SECRET_KEY = 'your-secret-key'
-    MONGO_URI = os.getenv('MONGO_URI', 'mongodb://root:pass@mongodb:27017/condorsy?authSource=admin')
+    MONGO_URI = 'mongodb://root:pass@mongodb:27017/condorsy?authSource=admin'
 
 class DevelopmentConfig(Config):
     DEBUG = True
