@@ -11,7 +11,6 @@ def create_app():
 
     # Utilisez une clé sécurisée pour le JWT
     app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'fallback-secret-key')
-
     jwt = JWTManager(app)
 
     from .routes import main_bp
