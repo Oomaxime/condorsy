@@ -3,7 +3,7 @@ from config import Config
 from datetime import datetime, UTC
 
 client = MongoClient(Config.MONGO_URI)
-db = client['condorsy']
+db = client['condorcy']
 
 # Collections
 users_collection = db['users']

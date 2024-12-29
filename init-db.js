@@ -1,9 +1,9 @@
-db = db.getSiblingDB("condorsy");
+db = db.getSiblingDB("condorcy");
 
 db.createUser({
   user: "root",
   pwd: "pass",
-  roles: [{ role: "readWrite", db: "condorsy" }],
+  roles: [{ role: "readWrite", db: "condorcy" }],
 });
 
 db.users.insertMany([
