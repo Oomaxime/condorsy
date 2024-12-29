@@ -1,11 +1,11 @@
+console.log("login.js est exécuté !");
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   const errorDiv = document.querySelector(".form-error");
 
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    errorDiv.style.display = "none";
-    console.log("submit");
+    console.log("Soumission du formulaire capturée !");
 
     const pseudo = loginForm.pseudo.value;
     const password = loginForm.password.value;
@@ -23,3 +23,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Page chargée et script chargé !");
+  const loginForm = document.getElementById("login-form");
+  if (!loginForm) {
+    console.error("Formulaire de login introuvable !");
+    return;
+  }
+});
+

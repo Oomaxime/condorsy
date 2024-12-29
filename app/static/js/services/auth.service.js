@@ -5,6 +5,7 @@ const AuthService = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Cache-Control": "no-cache", // Désactiver le cache
         },
         body: JSON.stringify({ pseudo, password }),
       });
