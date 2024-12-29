@@ -19,5 +19,6 @@
 
     <script src="{{ url_for('static', filename='js/utils/api.js') }}"></script>
     <script src="{{ url_for('static', filename='js/services/auth.service.js') }}"></script>
+    {% block extra_js %}{% endblock %}
   </body>
 </html>

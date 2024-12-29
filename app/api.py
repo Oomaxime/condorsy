@@ -64,38 +64,44 @@ def signup():
     return jsonify({'id': str(result.inserted_id)}), 201
 
 
-# Connexion des utilisateurs
 @api.route('/api/login', methods=['POST'])
 def login():
-    data = request.get_json()
-    required_fields = ['pseudo', 'password']
-    if not all(field in data for field in required_fields):
-        return jsonify({'error': 'Missing required fields'}), 400
+    try:
+        # Récupérer les données JSON
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Invalid JSON format'}), 400
 
-    # Vérifier les informations de l'utilisateur
-    user = users_collection.find_one({'pseudo': data['pseudo']})
-    if not user or user['password'] != data['password']:  # Comparaison en clair
-        return jsonify({'error': 'Invalid pseudo or password'}), 401
+        # Vérifier les champs requis
+        required_fields = ['pseudo', 'password']
+        if not all(field in data for field in required_fields):
+            return jsonify({'error': 'Missing required fields'}), 400
 
-    # Retourner le token et les informations utilisateur (sans le mot de passe)
-    user_data = {
-        'pseudo': user['pseudo'],
-        'age': user['age'],
-        'addresse': user['addresse'],
-        'job': user['job'],
-        'admin': user['admin']
-    }
+        # Vérifier les informations de l'utilisateur
+        user = users_collection.find_one({'pseudo': data['pseudo']})
+        if not user or user['password'] != data['password']:
+            return jsonify({'error': 'Invalid pseudo or password'}), 401
 
-    # Création du token JWT
-    access_token = create_access_token(
-        identity=str(user['_id']),
-        additional_claims=user_data
-    )
-    response = make_response(jsonify({"message": "Success"}), 200)
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
-    return response, jsonify({
-        'token': access_token,
-        'user': user_data
-    }), 200
+        # Préparer les données utilisateur (sans le mot de passe)
+        user_data = {
+            'pseudo': user['pseudo'],
+            'age': user.get('age'),
+            'address': user.get('address'),
+            'job': user.get('job'),
+            'admin': user.get('admin', False),
+        }
+
+        # Créer un token JWT
+        access_token = create_access_token(identity=str(user['_id']), additional_claims=user_data)
+
+        # Retourner la réponse
+        response = {
+            'message': 'Success',
+            'token': access_token,
+            'user': user_data
+        }
+        return jsonify(response), 200
+
+    except Exception as e:
+        print(f"Erreur lors du traitement de la requête: {e}")
+        return jsonify({'error': 'Internal Server Error'}), 500
