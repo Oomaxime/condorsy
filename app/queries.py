@@ -4,7 +4,7 @@ from bson.objectid import ObjectId
 from datetime import datetime
 
 client = MongoClient("mongodb://mongodb:27017/")
-db = client["condorsy"]
+db = client["condorcy"]
 surveys_collection = db["surveys"]
 users_collection = db["users"]
 

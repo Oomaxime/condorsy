@@ -26,7 +26,7 @@ def create_app():
 
 try:
     client = MongoClient(Config.MONGO_URI)
-    db = client['condorsy']
+    db = client['condorcy']
     # Si la connexion réussit, afficher un message
     print("Connexion à MongoDB réussie!")
 except Exception as e:
