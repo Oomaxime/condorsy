@@ -1,11 +1,14 @@
 # requèete MongoDB pour UC10/11
 from pymongo import MongoClient
+from config import Config
 from bson.objectid import ObjectId
 
-client = MongoClient("mongodb://mongodb:27017/")
-db = client["condorcy"]
-surveys_collection = db["surveys"]
-users_collection = db["users"]
+client = MongoClient(Config.MONGO_URI)
+db = client['condorcy']
+
+# Collections
+users_collection = db['users']
+surveys_collection = db['surveys']
 
 
 def get_top_surveys_by_participants():
