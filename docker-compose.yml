@@ -1,12 +1,10 @@
-version: '3.8'
-
 services:
   mongodb:
     image: mongo:latest
     hostname: test_mongodb
     container_name: db
     environment:
-      - MONGO_INITDB_DATABASE=condorsy
+      - MONGO_INITDB_DATABASE=condorcy
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=pass
     ports:
@@ -18,10 +16,13 @@ services:
     build: .
     container_name: python_app
     ports:
-      - "5000:5000"
+      - "5001:5000"
     depends_on:
       - mongodb
     volumes:
       - .:/app
     environment:
-      - MONGO_URI=db://root:pass@mongodb:27017/condorsy
+      - MONGO_URI=mongodb://root:pass@mongodb:27017/condorcy?authSource=admin
+
+volumes:
+  mongodb_data:
