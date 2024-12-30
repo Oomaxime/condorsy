@@ -43,18 +43,24 @@ async function fetchTopSurveys() {
         alert('Erreur lors de la récupération des données des scrutins : ' + error.message);
     }
 }
-
-    // Graphique 2 : Répartition des votes par année de naissance
-async function fetchSurveyVotesByBirthYear() {
+// Graphique 2 : Répartition des votes par année de naissance
+async function fetchSurveyVotesByBirthYear(surveyId) {
     try {
-        const response = await fetch(`/api/surveys/${surveysId}/votes-by-birth-year`);
+        const response = await fetch(`/api/surveys/${surveyId}/votes-by-birth-year`);
         const data = await response.json();
+
+        console.log("Données récupérées : ", data); // Affiche les données dans la console pour déboguer
+
+        // Vérifier si un graphique existe déjà et le détruire avant de le recréer
+        if (window.birthYearVotesChart instanceof Chart) {
+            window.birthYearVotesChart.destroy();
+        }
 
         const labels = Object.keys(data);
         const voteCounts = Object.values(data).map(votes => votes.length);
 
         const ctx2 = document.getElementById('birthYearVotesChart').getContext('2d');
-        new Chart(ctx2, {
+        window.birthYearVotesChart = new Chart(ctx2, {
             type: 'line',
             data: {
                 labels: labels,
@@ -87,16 +93,16 @@ async function fetchSurveyVotesByBirthYear() {
 // Ajouter un event listener pour le sélecteur de scrutin
 const surveySelector = document.getElementById('surveySelector');
 surveySelector.addEventListener('change', (event) => {
-const surveysId = event.target.value;
-if (surveysId) {
-    fetchSurveyVotesByBirthYear(surveysId);
-}
+    const surveyId = event.target.value; // Utiliser surveyId au lieu de surveysId
+    if (surveyId) {
+        fetchSurveyVotesByBirthYear(surveyId);
+    }
 });
 
-    // Charger la liste des scrutins dans le sélecteur
+// Charger la liste des scrutins dans le sélecteur
 async function populateSurveySelector() {
     try {
-        const response = await fetch("http://localhost:5001/api/surveys/top")
+        const response = await fetch("http://localhost:5001/api/surveys/top");
         const data = await response.json();
 
         const selector = document.getElementById("surveySelector");
@@ -111,7 +117,6 @@ async function populateSurveySelector() {
         console.error("Erreur lors de la récupération de la liste des scrutins :", error);
     }
 }
-
 
     // Graphique 3 : Nombre moyen d'options par scrutin
 async function fetchAverageChoices() {

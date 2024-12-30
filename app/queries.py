@@ -31,26 +31,40 @@ def get_top_surveys_by_participants():
 
 
 def get_votes_by_birth_year(survey_id):
-    # Récupération du scrutin spécifié
-    survey = surveys_collection.find_one({"_id": ObjectId(survey_id)})
+    # survey_id est un ObjectId valide
+    if isinstance(survey_id, str):
+        survey_id = ObjectId(survey_id)
+    survey = surveys_collection.find_one({"_id": survey_id})
     if not survey:
         return {"error": "Survey not found"}
-
-    # Récupération des utilisateurs ayant participé
     user_ids = [response["user_id"] for response in survey["reponses"]]
-    users = users_collection.find({"_id": {"$in": user_ids}})
+    try:
+        user_ids = [ObjectId(user_id) if isinstance(user_id, str) else user_id for user_id in user_ids]
+    except Exception as e:
+        return {"error": f"Invalid user_id format: {e}"}
+    if not user_ids:
+        return {"error": "No participants found for this survey"}
+    print(f"user_ids (avant requête): {user_ids}")
+
+    try:
+        users = users_collection.find({"_id": {"$in": user_ids}})
+    except Exception as e:
+        return {"error": f"Erreur dans la requête MongoDB : {e}"}
 
     # Calcul des votes par année de naissance
     birth_year_votes = {}
     for user in users:
+        # Extraction de l'année de naissance
         birth_year = user["date_of_birth"].year
-        birth_year_votes.setdefault(birth_year, 0)
-        # Compter les réponses pour chaque année
+        birth_year_votes.setdefault(birth_year, [])
         for response in survey["reponses"]:
             if response["user_id"] == user["_id"]:
-                birth_year_votes[birth_year] += len(response["reponse"])
+                birth_year_votes[birth_year].append(response["reponse"])
 
-    return birth_year_votes
+    # Convertir les votes en comptage (nombre de votes par années)
+    birth_year_counts = {year: len(votes) for year, votes in birth_year_votes.items()}
+
+    return birth_year_counts
 
 
 def get_average_choices():
