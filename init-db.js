@@ -912,6 +912,7 @@ db.users.insertMany([
 db.surveys.insertMany([
   {
     id: "survey-001",
+    algo: "condorcy",
     creator: {
       user_id: {
         $oid: "fb53ee50-443b-4c1a-a60b-9bc704326d74",
@@ -932,6 +933,7 @@ db.surveys.insertMany([
   },
   {
     id: "survey-002",
+    algo: "majority",
     creator: {
       user_id: {
         $oid: "493f80f7-3734-42b3-90bf-f51dfcf7ba15",
@@ -971,6 +973,7 @@ db.surveys.insertMany([
   },
   {
     id: "survey-003",
+    algo: "quantitySort",
     creator: {
       user_id: {
         $oid: "b8c5b850-518d-4536-89c3-9e8a1526a8f5",
@@ -1017,6 +1020,7 @@ db.surveys.insertMany([
   },
   {
     id: "survey-004",
+    algo: "condorcy",
     creator: {
       user_id: {
         $oid: "493f80f7-3734-42b3-90bf-f51dfcf7ba15",
@@ -1087,6 +1091,7 @@ db.surveys.insertMany([
   },
   {
     id: "survey-005",
+    algo: "majority",
     creator: {
       user_id: {
         $oid: "9fcccc48-0903-4d5c-bebb-4651661a72f6",
@@ -1108,6 +1113,7 @@ db.surveys.insertMany([
   },
   {
     id: "survey-006",
+    algo: "quantitySort",
     creator: {
       user_id: {
         $oid: "9fcccc48-0903-4d5c-bebb-4651661a72f6",
@@ -1153,6 +1159,7 @@ db.surveys.insertMany([
   },
   {
     id: "survey-007",
+    algo: "condorcy",
     creator: {
       user_id: {
         $oid: "afe13d88-c873-423c-8d14-6625cb53669c",
@@ -1222,6 +1229,7 @@ db.surveys.insertMany([
   },
   {
     id: "survey-008",
+    algo: "majority",
     creator: {
       user_id: {
         $oid: "ea37eb9b-0d60-413d-84b0-c4df8cf5f12b",
@@ -1237,448 +1245,6 @@ db.surveys.insertMany([
       update: "2024-11-28",
     },
     choix: ["sesame", "jungle", "guard", "editor", "taxicab"],
-    reponses: [
-      {
-        user_id: {
-          $oid: "e79a9f76-89f0-41bd-98d9-ab4a05ee845c",
-        },
-        reponse: ["editor", "jungle", "taxicab", "guard", "sesame"],
-      },
-      {
-        user_id: {
-          $oid: "41de043a-722c-4d3e-be52-fad9f78b0f72",
-        },
-        reponse: ["editor", "sesame", "jungle"],
-      },
-      {
-        user_id: {
-          $oid: "38e7d99f-65fc-4d87-9f8d-530554beef0b",
-        },
-        reponse: ["jungle", "sesame", "editor", "taxicab"],
-      },
-      {
-        user_id: {
-          $oid: "d777a9c3-60fd-4801-8e0b-5200e6b7c1b6",
-        },
-        reponse: ["taxicab", "guard", "sesame", "editor", "jungle"],
-      },
-      {
-        user_id: {
-          $oid: "06d963fb-91f4-4a23-9412-aa84c3ff49dc",
-        },
-        reponse: [],
-      },
-      {
-        user_id: {
-          $oid: "824c64d8-dace-40d7-b46b-68ec6638bbd7",
-        },
-        reponse: ["taxicab", "editor", "guard", "jungle"],
-      },
-      {
-        user_id: {
-          $oid: "fe885170-5f83-49e0-84d6-9363a456574a",
-        },
-        reponse: [],
-      },
-      {
-        user_id: {
-          $oid: "17d0642e-0af9-48af-a441-fabb709813d7",
-        },
-        reponse: ["guard", "sesame", "taxicab"],
-      },
-      {
-        user_id: {
-          $oid: "ca51ebd2-0096-4698-ab4e-78026188be6a",
-        },
-        reponse: ["editor", "taxicab", "jungle"],
-      },
-      {
-        user_id: {
-          $oid: "ac9f0f16-5fce-495a-91f1-d6e91b3f1e68",
-        },
-        reponse: ["sesame", "editor", "taxicab", "jungle"],
-      },
-    ],
-    results: [],
-  },
-  {
-    id: "survey-009",
-    creator: {
-      user_id: {
-        $oid: "cd5bc8d3-ba8c-460b-96b4-e6fd70909c89",
-      },
-    },
-    question:
-      "Suscipio autem paens tergiversatio odit desparatus tondeo incidunt.",
-    description:
-      "Collum pecus defendo aperte talis repudiandae tabernus dolorem vivo tamquam. Sordeo utrum conforto campana quibusdam defluo celer combibo avarus. Depopulo sursum curvo accedo accusator careo.",
-    date: {
-      create: "2024-04-07",
-      start: "2025-04-20",
-      end: "2025-07-13",
-      update: "2024-11-27",
-    },
-    choix: ["derby", "disconnection", "manner", "exploration"],
-    reponses: [
-      {
-        user_id: {
-          $oid: "129852df-0ab6-4e29-b4c3-e1208fdb5648",
-        },
-        reponse: ["disconnection", "exploration", "manner", "derby"],
-      },
-      {
-        user_id: {
-          $oid: "41de043a-722c-4d3e-be52-fad9f78b0f72",
-        },
-        reponse: [],
-      },
-      {
-        user_id: {
-          $oid: "820f5a55-24af-4130-be47-574059d59436",
-        },
-        reponse: ["exploration", "derby", "disconnection", "manner"],
-      },
-      {
-        user_id: {
-          $oid: "69f248e1-c635-4dfd-acd7-4f8918e117b4",
-        },
-        reponse: [],
-      },
-      {
-        user_id: {
-          $oid: "a4ef0bf3-aaf4-48fd-a028-963b29107b1a",
-        },
-        reponse: ["exploration", "manner", "derby", "disconnection"],
-      },
-    ],
-    results: [],
-  },
-  {
-    id: "survey-010",
-    creator: {
-      user_id: {
-        $oid: "73fb90ba-7a6d-44ea-bdeb-261d625635f1",
-      },
-    },
-    question: "Trado suggero rerum usque adsidue agnitio ascisco temptatio.",
-    description:
-      "Sonitus porro paulatim beatae adulescens cursim. Acies ocer desino truculenter libero. Admoveo quas amplitudo vulgaris ceno territo calcar caute cibus tollo.",
-    date: {
-      create: "2024-09-01",
-      start: "2024-12-23",
-      end: "2025-08-06",
-      update: "2024-11-28",
-    },
-    choix: ["sightseeing", "embarrassment", "amendment", "procurement"],
-    reponses: [
-      {
-        user_id: {
-          $oid: "8c9e3ed3-e858-4132-99d3-72b7dfe41bc7",
-        },
-        reponse: ["amendment", "sightseeing", "procurement"],
-      },
-      {
-        user_id: {
-          $oid: "69f248e1-c635-4dfd-acd7-4f8918e117b4",
-        },
-        reponse: ["amendment"],
-      },
-      {
-        user_id: {
-          $oid: "5edc5278-64d3-4b1f-a695-60c4ecaf2c9f",
-        },
-        reponse: ["sightseeing", "procurement"],
-      },
-      {
-        user_id: {
-          $oid: "7902b34a-ac75-4699-884a-59bdd6a75ad9",
-        },
-        reponse: ["embarrassment"],
-      },
-      {
-        user_id: {
-          $oid: "238711e4-3031-4a4b-92fe-a3eeed56145c",
-        },
-        reponse: [],
-      },
-      {
-        user_id: {
-          $oid: "e79a9f76-89f0-41bd-98d9-ab4a05ee845c",
-        },
-        reponse: ["sightseeing", "embarrassment", "procurement"],
-      },
-      {
-        user_id: {
-          $oid: "579a4e5f-118a-4b0a-8f4b-491fde29fe2d",
-        },
-        reponse: ["embarrassment", "amendment", "procurement"],
-      },
-    ],
-    results: [],
-  },
-  {
-    id: "survey-011",
-    creator: {
-      user_id: {
-        $oid: "bc7177de-d40d-4978-917f-4624d7cc2879",
-      },
-    },
-    question:
-      "Civitas labore adulescens cruciamentum cunctatio paens iste carcer.",
-    description:
-      "Tabesco abeo convoco dignissimos ullus tredecim theologus. Decens necessitatibus auctus triduana. Sperno repudiandae tenetur.",
-    date: {
-      create: "2023-12-24",
-      start: "2025-08-26",
-      end: "2025-07-17",
-      update: "2024-11-28",
-    },
-    choix: ["numeracy", "populist", "eyeliner", "equal"],
-    reponses: [
-      {
-        user_id: {
-          $oid: "27f9201d-41b8-41ee-aa23-f34647163da7",
-        },
-        reponse: ["numeracy", "populist"],
-      },
-      {
-        user_id: {
-          $oid: "61d95ab7-6b82-49ba-adb2-e3cce48c8753",
-        },
-        reponse: [],
-      },
-      {
-        user_id: {
-          $oid: "d4edb873-2ae7-4daf-8bf6-b11ed9e1cd32",
-        },
-        reponse: ["numeracy", "populist"],
-      },
-      {
-        user_id: {
-          $oid: "6b95d36e-ea46-4f7c-ad6d-90afbc64e72a",
-        },
-        reponse: ["numeracy", "eyeliner", "equal"],
-      },
-      {
-        user_id: {
-          $oid: "34a42c48-5963-4947-8129-1a5a2e7e4d08",
-        },
-        reponse: ["numeracy", "eyeliner"],
-      },
-      {
-        user_id: {
-          $oid: "645c915c-a798-4fab-b44c-56f841fe05f0",
-        },
-        reponse: [],
-      },
-      {
-        user_id: {
-          $oid: "a4a28a24-3fb0-4af9-a5d3-da2b5c2cb409",
-        },
-        reponse: ["populist", "numeracy"],
-      },
-      {
-        user_id: {
-          $oid: "65ff16f5-ab8c-4dbe-8a28-c5b803103d9d",
-        },
-        reponse: ["numeracy", "equal"],
-      },
-      {
-        user_id: {
-          $oid: "ea93c504-0db9-46b4-a678-a9c39f79404c",
-        },
-        reponse: ["eyeliner", "populist", "equal"],
-      },
-      {
-        user_id: {
-          $oid: "65c41f64-5860-49c0-b1e7-821fbf4c73de",
-        },
-        reponse: ["eyeliner", "numeracy"],
-      },
-    ],
-    results: [],
-  },
-  {
-    id: "survey-012",
-    creator: {
-      user_id: {
-        $oid: "7bbc569f-b98f-4b2a-9149-e981b28a3a6a",
-      },
-    },
-    question: "Adicio solum combibo bos rerum caste caelestis vulgivagus.",
-    description:
-      "Thorax aliquam ceno. Minus explicabo utrum neque deleniti terror cohaero tui. Caveo caelum calamitas amo.",
-    date: {
-      create: "2024-01-25",
-      start: "2025-09-11",
-      end: "2025-08-10",
-      update: "2024-11-28",
-    },
-    choix: ["birth", "hygienic"],
-    reponses: [],
-    results: [],
-  },
-  {
-    id: "survey-013",
-    creator: {
-      user_id: {
-        $oid: "410b0252-98cb-472a-8a1e-7ee2e0c55622",
-      },
-    },
-    question:
-      "Contabesco vere veritatis amaritudo commodi villa animus degenero.",
-    description:
-      "Aspicio quos illo acquiro sono admoveo stips voluptatem tenus. Viriliter cunabula vilis curo aegrus cultellus speciosus avaritia animi. Damnatio succurro comedo debilito suasoria nisi.",
-    date: {
-      create: "2024-04-01",
-      start: "2025-08-30",
-      end: "2025-01-16",
-      update: "2024-11-27",
-    },
-    choix: ["accelerator", "tapioca", "chasuble", "verve"],
-    reponses: [
-      {
-        user_id: {
-          $oid: "a3edd517-2f3b-4742-a705-e7e672ce6c3e",
-        },
-        reponse: ["verve", "tapioca", "accelerator"],
-      },
-      {
-        user_id: {
-          $oid: "8cf4a858-f606-4959-a184-19b60e38729a",
-        },
-        reponse: ["tapioca"],
-      },
-      {
-        user_id: {
-          $oid: "b6b70539-99c5-49db-bdc2-7b1435ffcc6b",
-        },
-        reponse: ["chasuble", "tapioca", "verve"],
-      },
-      {
-        user_id: {
-          $oid: "111f3772-912b-4c6d-b714-0d17ec606f67",
-        },
-        reponse: ["chasuble"],
-      },
-      {
-        user_id: {
-          $oid: "579a4e5f-118a-4b0a-8f4b-491fde29fe2d",
-        },
-        reponse: [],
-      },
-      {
-        user_id: {
-          $oid: "6ea85a3f-7754-46f4-b824-4c70d9489d3f",
-        },
-        reponse: ["tapioca"],
-      },
-      {
-        user_id: {
-          $oid: "e255a04c-f8f5-4b01-abae-13479342905c",
-        },
-        reponse: [],
-      },
-      {
-        user_id: {
-          $oid: "a4ef0bf3-aaf4-48fd-a028-963b29107b1a",
-        },
-        reponse: [],
-      },
-      {
-        user_id: {
-          $oid: "6ea85a3f-7754-46f4-b824-4c70d9489d3f",
-        },
-        reponse: ["accelerator", "verve", "chasuble", "tapioca"],
-      },
-      {
-        user_id: {
-          $oid: "579a4e5f-118a-4b0a-8f4b-491fde29fe2d",
-        },
-        reponse: ["verve", "accelerator", "tapioca"],
-      },
-    ],
-    results: [],
-  },
-  {
-    id: "survey-014",
-    creator: {
-      user_id: {
-        $oid: "1c136783-769f-460b-96bf-b7d7273266eb",
-      },
-    },
-    question: "Adflicto uberrime utpote absens deputo teres valetudo alias.",
-    description:
-      "Bene arguo illo atqui armarium fugiat vulpes tergeo corpus. Peior aliqua alii tremo amissio amaritudo tepesco abeo tracto aeger. Decens statua inventore placeat.",
-    date: {
-      create: "2024-02-25",
-      start: "2025-02-24",
-      end: "2025-11-14",
-      update: "2024-11-28",
-    },
-    choix: ["density", "academics", "cap", "waterspout"],
-    reponses: [
-      {
-        user_id: {
-          $oid: "fe885170-5f83-49e0-84d6-9363a456574a",
-        },
-        reponse: [],
-      },
-      {
-        user_id: {
-          $oid: "b8c5b850-518d-4536-89c3-9e8a1526a8f5",
-        },
-        reponse: ["density", "cap"],
-      },
-      {
-        user_id: {
-          $oid: "9190cd21-d512-4164-bb19-68c4dbe38ae3",
-        },
-        reponse: ["academics", "waterspout"],
-      },
-      {
-        user_id: {
-          $oid: "e24541c2-8d86-4b2e-b631-73037fed61c3",
-        },
-        reponse: ["academics", "density", "waterspout"],
-      },
-      {
-        user_id: {
-          $oid: "493f80f7-3734-42b3-90bf-f51dfcf7ba15",
-        },
-        reponse: ["density", "waterspout", "cap", "academics"],
-      },
-      {
-        user_id: {
-          $oid: "8c9e3ed3-e858-4132-99d3-72b7dfe41bc7",
-        },
-        reponse: ["density", "academics"],
-      },
-      {
-        user_id: {
-          $oid: "ca51ebd2-0096-4698-ab4e-78026188be6a",
-        },
-        reponse: [],
-      },
-    ],
-  },
-  {
-    creator: {
-      user_id: {
-        $oid: "c1b34415-5fab-4453-bcae-644161604e43",
-      },
-    },
-    question:
-      "Demergo aveho explicabo somnus cattus spiritus reiciendis suscipit.",
-    description:
-      "Amoveo cribro toties vulgivagus vomito vir arca. Defleo apto depulso quibusdam tero censura synagoga teneo callide. Cernuus optio torrens patruus cotidie eaque nemo canto dolore.",
-    date: {
-      create: "2024-01-17",
-      start: "2025-09-18",
-      end: "2024-12-28",
-      update: "2024-11-28",
-    },
-    choix: ["brush", "hose", "barracks", "feather", "tentacle"],
     reponses: [
       {
         user_id: {
@@ -1730,6 +1296,7 @@ db.surveys.insertMany([
         $oid: "8a7994a8-bb97-4aef-9cf9-48853b5de62e",
       },
     },
+    algo: "quantitySort",
     question: "Vulnus iste cornu toties damnatio tricesimus ducimus surgo.",
     description:
       "Totus consuasor defaeco vester sordeo bellum. Coruscus argentum audentia virtus. Laboriosam coaegresco aureus arca aequitas conor carbo.",
@@ -1755,6 +1322,7 @@ db.surveys.insertMany([
         $oid: "5edc5278-64d3-4b1f-a695-60c4ecaf2c9f",
       },
     },
+    algo: "condorcy",
     question: "Cruentus assentator dens vilitas cultura alii casus eaque.",
     description:
       "Ex vester textor agnitio vicissitudo dolore aptus. Tergo teneo vorago cattus perferendis vestigium vulgus impedit. Ater coruscus tantillus adeptio vulpes praesentium vergo adsidue.",
