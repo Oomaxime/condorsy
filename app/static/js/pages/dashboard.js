@@ -1,3 +1,4 @@
+// Graph front UC 11
 document.addEventListener("DOMContentLoaded", () => {
     // Graphique 1 : Les scrutins qui ont attiré le plus de participants
 async function fetchTopSurveys() {
@@ -49,19 +50,19 @@ async function fetchSurveyVotesByBirthYear(surveyId) {
         const response = await fetch(`/api/surveys/${surveyId}/votes-by-birth-year`);
         const data = await response.json();
 
-        console.log("Données récupérées : ", data); // Affiche les données dans la console pour déboguer
+        console.log("Données récupérées : ", data); // (j'ai legit passer 5h sur ce graph et sa logique)
 
-        // Vérifier si un graphique existe déjà et le détruire avant de le recréer
+        // Vérif si un graph existe si oui le détruire puis le recréer
         if (window.birthYearVotesChart instanceof Chart) {
             window.birthYearVotesChart.destroy();
         }
 
-        const labels = Object.keys(data);
-        const voteCounts = Object.values(data).map(votes => votes.length);
+        const labels = Object.keys(data); // Années de naissance
+        const voteCounts = Object.values(data); // Nombre de votes
 
         const ctx2 = document.getElementById('birthYearVotesChart').getContext('2d');
         window.birthYearVotesChart = new Chart(ctx2, {
-            type: 'line',
+            type: 'pie',
             data: {
                 labels: labels,
                 datasets: [{
@@ -90,7 +91,7 @@ async function fetchSurveyVotesByBirthYear(surveyId) {
     }
 }
 
-// Ajouter un event listener pour le sélecteur de scrutin
+// Pour le sélect de survey
 const surveySelector = document.getElementById('surveySelector');
 surveySelector.addEventListener('change', (event) => {
     const surveyId = event.target.value; // Utiliser surveyId au lieu de surveysId
@@ -99,7 +100,7 @@ surveySelector.addEventListener('change', (event) => {
     }
 });
 
-// Charger la liste des scrutins dans le sélecteur
+// Charge la liste des surveys dans le sélect
 async function populateSurveySelector() {
     try {
         const response = await fetch("http://localhost:5001/api/surveys/top");
@@ -148,7 +149,7 @@ async function fetchAverageChoices() {
 }
 
 
-    // Appels des fonctions pour charger les données et initialiser les graphiques
+    // charge les datas et init les graph
     fetchTopSurveys();
     populateSurveySelector();
     fetchAverageChoices();

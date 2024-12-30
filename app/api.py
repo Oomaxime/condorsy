@@ -119,13 +119,20 @@ def top_surveys():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 @api.route('/api/surveys/<survey_id>/votes-by-birth-year', methods=['GET'])
 def votes_by_year(survey_id):
     try:
         data = get_votes_by_birth_year(survey_id)
-        return jsonify(data), 200
+        if isinstance(data, dict):
+            print(f"Données renvoyées pour le scrutin {survey_id}: {data}")
+            return jsonify(data), 200
+        else:
+            return jsonify({"error": "Les données sont mal formatées."}), 500
     except Exception as e:
+        print(f"Erreur dans la récupération des votes par année de naissance pour {survey_id}: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
 
 @api.route('/api/surveys/average_choices', methods=['GET'])
 def average_choices():

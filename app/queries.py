@@ -10,7 +10,7 @@ db = client['condorcy']
 users_collection = db['users']
 surveys_collection = db['surveys']
 
-
+#Graph 1
 def get_top_surveys_by_participants():
     pipeline = [
         {"$unwind": "$reponses"},
@@ -29,44 +29,41 @@ def get_top_surveys_by_participants():
 
     return surveys
 
-
+# Graph 2
 def get_votes_by_birth_year(survey_id):
-    # survey_id est un ObjectId valide
-    if isinstance(survey_id, str):
-        survey_id = ObjectId(survey_id)
-    survey = surveys_collection.find_one({"_id": survey_id})
+    survey = surveys_collection.find_one({"_id": ObjectId(survey_id)})
     if not survey:
         return {"error": "Survey not found"}
-    user_ids = [response["user_id"] for response in survey["reponses"]]
-    try:
-        user_ids = [ObjectId(user_id) if isinstance(user_id, str) else user_id for user_id in user_ids]
-    except Exception as e:
-        return {"error": f"Invalid user_id format: {e}"}
-    if not user_ids:
-        return {"error": "No participants found for this survey"}
-    print(f"user_ids (avant requête): {user_ids}")
+    user_ids = []
+    for response in survey["reponses"]:
+        user_id = response["user_id"]
+        if isinstance(user_id, dict) and "$oid" in user_id:
+            user_ids.append(user_id["$oid"])
+        else:
+            user_ids.append(user_id)
+    print("User IDs après correction :", user_ids)
+    users = users_collection.find({"id": {"$in": user_ids}})
+    users = list(users)
+    print("Utilisateurs récupérés :", users)
 
-    try:
-        users = users_collection.find({"_id": {"$in": user_ids}})
-    except Exception as e:
-        return {"error": f"Erreur dans la requête MongoDB : {e}"}
-
-    # Calcul des votes par année de naissance
+# sysème de calcule des votes par rapport aux années de naissance (ne pas le toucher par pitié)
     birth_year_votes = {}
     for user in users:
-        # Extraction de l'année de naissance
-        birth_year = user["date_of_birth"].year
-        birth_year_votes.setdefault(birth_year, [])
-        for response in survey["reponses"]:
-            if response["user_id"] == user["_id"]:
-                birth_year_votes[birth_year].append(response["reponse"])
+        birth_year = int(user["date_of_birth"].split("-")[0])  # on va chercher l'année de naissance
+        birth_year_votes.setdefault(birth_year, 0)  # on remet à 0 pour bien partir
 
-    # Convertir les votes en comptage (nombre de votes par années)
-    birth_year_counts = {year: len(votes) for year, votes in birth_year_votes.items()}
+    # on parcours chaque réponse pour incrémenter les votes
+    for response in survey["reponses"]:
+        response_user_id = str(response["user_id"].get("$oid", response["user_id"]))
 
-    return birth_year_counts
+        matching_user = next((user for user in users if str(user["id"]) == response_user_id), None)
 
+        if matching_user:
+            birth_year = int(matching_user["date_of_birth"].split("-")[0])
+            birth_year_votes[birth_year] += len(response["reponse"])
+    return birth_year_votes
 
+# Graph 3
 def get_average_choices():
     pipeline = [
         {"$project": {"choice_count": {"$size": "$choix"}}},
