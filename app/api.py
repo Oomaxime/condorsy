@@ -119,7 +119,7 @@ def top_surveys():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@api.route('/api/surveys/<survey_id>/votes_by_year', methods=['GET'])
+@api.route('/api/surveys/<survey_id>/votes-by-birth-year', methods=['GET'])
 def votes_by_year(survey_id):
     try:
         data = get_votes_by_birth_year(survey_id)

@@ -21,7 +21,13 @@ def get_top_surveys_by_participants():
         }},
         {"$sort": {"participant_count": -1}}
     ]
-    return list(surveys_collection.aggregate(pipeline))
+    surveys = list(surveys_collection.aggregate(pipeline))
+
+    # Convertir les _id MongoDB en chaîne de caractères pour faciliter le traitement côté frontend
+    for survey in surveys:
+        survey["_id"] = str(survey["_id"])
+
+    return surveys
 
 
 def get_votes_by_birth_year(survey_id):
