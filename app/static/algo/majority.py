@@ -1,10 +1,3 @@
-results = [
-    {"reponse":"A", "id":1},
-    {"reponse":"B", "id":2},
-    {"reponse":"B", "id":4},
-    {"reponse":"C", "id":5},
-]
-
 choices = {}
 
 

@@ -1,11 +1,3 @@
-results = [
-    {"reponse":["A","B","C",'D'], "id":1},
-    {"reponse":["B","C","A",'D'], "id":2},
-    {"reponse":["C",'D',"A","B"], "id":3},
-]
-
-# Put it in a function
-
 convertion_choices = {}
 convertion_result = {}
 points = {}
