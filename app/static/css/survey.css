@@ -1,104 +1,55 @@
-/* si on avais le temps */
-
-:root {
-  --bg-color: #1f1f1f;
-  --primary-text-color: #fff;
-  --secondary-text-color: #ccc;
-  --input-bg-color: #333;
-  --button-bg-color: #444;
-  --button-hover-color: #666;
-  --border-color: #666;
-  --highlight-color: #999;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: var(--bg-color);
-  color: var(--primary-text-color);
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 h1 {
-  text-align: center;
-  color: var(--primary-text-color);
-  margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: black;
 }
 
-.survey-create {
-  width: 90%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #222;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.surveys-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
+.survey-card {
+    background-color: black;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.form-group {
-  margin-bottom: 20px;
+.survey-card h2 {
+    margin: 0 0 10px;
+    color: white;
 }
 
-label {
-  display: block;
-  font-size: 1rem;
-  color: var(--secondary-text-color);
-  margin-bottom: 5px;
+.survey-card p {
+    margin: 5px 0;
+    color: white;
 }
 
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  background-color: var(--input-bg-color);
-  color: var(--primary-text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-input:focus, textarea:focus {
-  outline: none;
-  border-color: var(--highlight-color);
-}
-
-textarea {
-  resize: vertical;
-}
-
-button {
-  padding: 12px;
-  background-color: var(--button-bg-color);
-  color: var(--primary-text-color);
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: var(--button-hover-color);
-}
-
-#add-choice {
-  margin-top: 10px;
-  background-color: #555;
-}
-
-#add-choice:hover {
-  background-color: #777;
-}
-
-.choice-inputs input {
-  margin-top: 10px;
-  margin-right: 10px;
-}
-
-#choices-container {
-  margin-top: 20px;
+.survey-card .date {
+    font-size: 0.9em;
+    color: white;
 }

@@ -506,46 +506,39 @@ def vote():
             "user_id": <id_de_l_utilisateur>
         }
     }
-
-    Conditions de participation :
-    - Le scrutin doit être actif (la date actuelle doit être entre la date de début et de fin).
-    - Un utilisateur ne peut participer qu'une seule fois à un scrutin donné.
-
-    Returns:
-        Response:
-            - 201 : Participation enregistrée ou messages d'erreur spécifiques.
-            - 400 : Format JSON invalide.
     """
     try:
-        data = request.get_json()  # Charger les données de la requête
+        data = request.get_json()
         if not data:
             return jsonify({'error': 'Invalid JSON format'}), 400
 
-        # Rechercher le scrutin
-        survey = surveys_collection.find_one({"id": data["id"]})
+        survey_id = data.get("id")
+        user_response = data.get("data")
+        user_id = user_response.get("user_id")
+
+        if not survey_id or not user_response or not user_id:
+            return jsonify({'error': 'Missing required fields'}), 400
+
+        survey = surveys_collection.find_one({"id": survey_id})
         if not survey:
             return jsonify({'error': 'Survey not found'}), 404
 
         now = datetime.now().strftime('%Y-%m-%d')
 
-        # Vérifier si le scrutin est actif
+        # Vérifie si le scrutin est actif
         if survey['date']['start'] <= now <= survey['date']['end']:
-            # Vérifier si l'utilisateur a déjà participé
-            for response in survey.get('reponses', []):
-                if response["user_id"] == data['data']['user_id']:
-                    return jsonify({'result': None, "message": "User already participated"}), 403
+            # Vérifie si l'utilisateur a déjà participé
+            if any(response["user_id"] == user_id for response in survey.get('reponses', [])):
+                return jsonify({'result': None, 'message': "User already participated"}), 403
 
             # Ajouter la réponse
-            modifications = {
-                "$push": {
-                    "reponses": data['data']
-                }
-            }
-            surveys_collection.update_one({"id": data["id"]}, modifications)
+            surveys_collection.update_one(
+                {"id": survey_id},
+                {"$push": {"reponses": user_response}}
+            )
+            return jsonify({'result': "Vote successfully recorded"}), 201
 
-            return jsonify({'result': "Data sent successfully"}), 201
-        else:
-            return jsonify({'result': None, 'message': "Cannot participate since the survey is not active"}), 403
+        return jsonify({'result': None, 'message': "Survey is not active"}), 403
 
     except Exception as e:
         print(f"Erreur lors de la participation au scrutin : {e}")

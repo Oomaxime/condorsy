@@ -923,8 +923,8 @@ db.surveys.insertMany([
       "Sui dolor nobis contego. Explicabo summa dolorum enim animi cubitum degero. Tergum supplanto somniculosus decretum aestas usque victoria.",
     date: {
       create: "2023-12-11",
-      start: "2025-06-23",
-      end: "2024-12-26",
+      start: "2024-06-23",
+      end: "2024-12-31",
       update: "2024-11-27",
     },
     choix: ["forgery", "netsuke", "understanding"],
@@ -1031,10 +1031,10 @@ db.surveys.insertMany([
     description:
       "Minus odio summisse claudeo cognomen congregatio enim tres assumenda aspernatur. Damno triduana vinitor triumphus alioqui venio audio. Verecundia contra cogo conculco xiphias viridis.",
     date: {
-      create: "2024-11-22",
-      start: "2025-04-26",
-      end: "2025-01-12",
-      update: "2024-11-28",
+      create: "2023-12-11",
+      start: "2024-06-23",
+      end: "2024-12-31",
+      update: "2024-11-27",
     },
     choix: ["backburn", "slide", "netsuke", "exasperation"],
     reponses: [

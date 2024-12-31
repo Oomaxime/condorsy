@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Sondages</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/survey.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Liste des Sondages</h1>
+        <div id="surveys-list" class="surveys-list">
+            <!-- Les sondages seront injectés ici via JavaScript -->
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/utils/AllSurveys.js') }}"></script>
+</body>
+</html>

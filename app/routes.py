@@ -5,6 +5,9 @@ main_bp = Blueprint('main', __name__)
 @main_bp.route('/', methods=['GET', 'POST'])
 def home():
     return render_template('index.html', title='home')
+@main_bp.route('/surveys', methods=['GET'])
+def survey():
+    return render_template('surveys/survey.html', title='survey')
 
 @main_bp.route('/register', methods=['GET', 'POST'])
 def register():

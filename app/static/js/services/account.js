@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const userData = await response.json();
     console.log(userData);
-
+    accountForm.pseudo.value = userData.pseudo || '';
     accountForm.date_naissance.value = userData.date_of_birth || '';
     accountForm.addresse.value = userData.addresse || '';
     accountForm.job.value = userData.job || '';
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   accountForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     console.log("Soumission du formulaire capturée !");
-
+    const pseudo = accountForm.pseudo.value;
     const date_naissance = accountForm.date_naissance.value;
     const addresse = accountForm.addresse.value;
     const job = accountForm.job.value;
