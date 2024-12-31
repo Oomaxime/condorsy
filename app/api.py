@@ -3,6 +3,7 @@ from app.models import surveys_collection, users_collection
 from datetime import datetime, timezone
 from flask_jwt_extended import create_access_token
 from app.queries import get_top_surveys_by_participants, get_votes_by_birth_year, get_average_choices
+from bson.objectid import ObjectId
 
 api = Blueprint('api', __name__)
 
@@ -111,7 +112,7 @@ def login():
 # UC 10/11 - Dashboard Admin
 ################################
 
-@api.route('/api/surveys/top', methods=['GET'])
+@api.route('/api/surveys/top-participants', methods=['GET'])
 def top_surveys():
     try:
         data = get_top_surveys_by_participants()
@@ -141,3 +142,21 @@ def average_choices():
         return jsonify({"average_choices": data}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@api.route('/api/surveys/delete', methods=['DELETE'])
+def delete_survey():
+    try:
+        survey_id = request.args.get('survey_id')
+        if not survey_id:
+            return jsonify({"error": "Missing survey_id"}), 400
+
+        # Convertir survey_id en ObjectId pour chercher par _id
+        result = surveys_collection.delete_one({"_id": ObjectId(survey_id)})
+        if result.deleted_count == 1:
+            return jsonify({"message": "Survey deleted successfully"}), 200
+        else:
+            return jsonify({"error": "Survey not found"}), 404
+    except Exception as e:
+        print(f"Erreur lors de la suppression du scrutin : {e}")
+        return jsonify({"error": "An error occurred"}), 500

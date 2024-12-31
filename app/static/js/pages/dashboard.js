@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Graphique 1 : Les scrutins qui ont attiré le plus de participants
 async function fetchTopSurveys() {
     try {
-        const response = await fetch("http://localhost:5001/api/surveys/top");
+        const response = await fetch("http://localhost:5001/api/surveys/top-participants");
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
         const data = await response.json();
 
@@ -103,7 +103,7 @@ surveySelector.addEventListener('change', (event) => {
 // Charge la liste des surveys dans le sélect
 async function populateSurveySelector() {
     try {
-        const response = await fetch("http://localhost:5001/api/surveys/top");
+        const response = await fetch("http://localhost:5001/api/surveys/top-participants");
         const data = await response.json();
 
         const selector = document.getElementById("surveySelector");
@@ -153,4 +153,55 @@ async function fetchAverageChoices() {
     fetchTopSurveys();
     populateSurveySelector();
     fetchAverageChoices();
+});
+
+// recup et charge les surveys
+async function fetchSurveys() {
+    try {
+        const response = await fetch('/api/surveys');
+        const surveys = await response.json();
+
+        const surveyList = document.getElementById('surveyList');
+        surveyList.innerHTML = '';
+
+        surveys.forEach(survey => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${survey.question}</td>
+                <td>
+                    <button onclick="deleteSurvey('${survey._id}')">Supprimer</button>
+                </td>
+            `;
+            surveyList.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Erreur lors de la récupération des scrutins :', error);
+    }
+}
+
+// Suppr un survey
+async function deleteSurvey(surveyId) {
+    if (confirm("Voulez-vous vraiment supprimer ce scrutin ?")) {
+        try {
+            const response = await fetch(`/api/surveys/delete?survey_id=${surveyId}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert(data.message); // confirmation (?)
+                fetchSurveys();
+            } else {
+                const errorData = await response.json();
+                alert(errorData.error || "Erreur lors de la suppression.");
+            }
+        } catch (error) {
+            console.error('Erreur lors de la suppression du scrutin :', error);
+        }
+    }
+}
+
+// ReCharge la liste des surveys
+document.addEventListener('DOMContentLoaded', () => {
+    fetchSurveys();
 });
