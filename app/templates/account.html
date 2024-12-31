@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Account</h1>
+  <form action="" method="POST">
+    <input type="text" name="email" placeholder="Email" value="{{ profile.email }}">
+    <input type="text" name="date_of_birth" placeholder="Date de naissance" value="{{ profile.date_of_birth }}">
+    <input type="text" name="addresse" placeholder="Address" value="{{ profile.addresse }}">
+    <input type="text" name="job" placeholder="Job" value="{{ profile.job }}">
+    <input type="text" name="password" placeholder="Mot de Passe" value="{{ profile.password }}">
+    <button type="submit">Modifier les infos</button>
+  </form>
+</body>
+</html>

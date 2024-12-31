@@ -105,3 +105,9 @@ def login():
     except Exception as e:
         print(f"Erreur lors du traitement de la requête: {e}")
         return jsonify({'error': 'Internal Server Error'}), 500
+
+
+@api.route('/api/account', methods=['GET'])
+def get_profile():
+    profile = users_collection.find_one({'pseudo': 'BP'})
+    return jsonify(profile), 200

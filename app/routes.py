@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request
+from app.models import users_collection
 
 main_bp = Blueprint('main', __name__)
 
@@ -15,8 +16,12 @@ def create_survey():
     return render_template('surveys/create.html')
 
 @main_bp.route('/account')
-def account():
-    return render_template('account.html', title='Account')
+def account():    
+    profil = users_collection.find_one({'pseudo': 'BP'})
+    if not profil:
+        return "User not found", 404
+    
+    return render_template('account.html', profile=profil)
 
 @main_bp.route('/login')
 def login():
