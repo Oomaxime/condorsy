@@ -2,6 +2,8 @@ from flask import Blueprint, jsonify, request, make_response
 from app.models import surveys_collection, users_collection
 from datetime import datetime, timezone
 from flask_jwt_extended import create_access_token
+from app.queries import get_top_surveys_by_participants, get_votes_by_birth_year, get_average_choices
+from bson.objectid import ObjectId
 
 api = Blueprint('api', __name__)
 
@@ -106,26 +108,55 @@ def login():
         print(f"Erreur lors du traitement de la requête: {e}")
         return jsonify({'error': 'Internal Server Error'}), 500
 
+################################
+# UC 10/11 - Dashboard Admin
+################################
 
-# @api.route('/api/account', methods=['GET'])
-# def get_profile():
-#     profile = users_collection.find_one({'pseudo': localStorage.getItem('pseudo')})
-#     return jsonify(profile), 200
+@api.route('/api/surveys/top-participants', methods=['GET'])
+def top_surveys():
+    try:
+        data = get_top_surveys_by_participants()
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
-@api.route('/api/account', methods=['PUT'])
-def update():
-    data = request.get_json()
-    required_fields = ['pseudo', 'date_of_birth', 'password', 'addresse', 'job']
-    if not all(field in data for field in required_fields):
-        return jsonify({'error': 'Missing required fields'}), 400
+@api.route('/api/surveys/<survey_id>/votes-by-birth-year', methods=['GET'])
+def votes_by_year(survey_id):
+    try:
+        data = get_votes_by_birth_year(survey_id)
+        if isinstance(data, dict):
+            print(f"Données renvoyées pour le scrutin {survey_id}: {data}")
+            return jsonify(data), 200
+        else:
+            return jsonify({"error": "Les données sont mal formatées."}), 500
+    except Exception as e:
+        print(f"Erreur dans la récupération des votes par année de naissance pour {survey_id}: {str(e)}")
+        return jsonify({"error": str(e)}), 500
 
-    user = {
-        'password': data['password'],
-        'date_of_birth': data['date_of_birth'],
-        'addresse': data['addresse'],
-        'job': data['job'],
-    }
 
-    result = users_collection.update_one({'pseudo': data['pseudo']}, {'$set': user})
-    return jsonify(), 200
+@api.route('/api/surveys/average_choices', methods=['GET'])
+def average_choices():
+    try:
+        data = get_average_choices()
+        return jsonify({"average_choices": data}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@api.route('/api/surveys/delete', methods=['DELETE'])
+def delete_survey():
+    try:
+        survey_id = request.args.get('survey_id')
+        if not survey_id:
+            return jsonify({"error": "Missing survey_id"}), 400
+
+        # Convertir survey_id en ObjectId pour chercher par _id
+        result = surveys_collection.delete_one({"_id": ObjectId(survey_id)})
+        if result.deleted_count == 1:
+            return jsonify({"message": "Survey deleted successfully"}), 200
+        else:
+            return jsonify({"error": "Survey not found"}), 404
+    except Exception as e:
+        print(f"Erreur lors de la suppression du scrutin : {e}")
+        return jsonify({"error": "An error occurred"}), 500
