@@ -107,7 +107,25 @@ def login():
         return jsonify({'error': 'Internal Server Error'}), 500
 
 
-@api.route('/api/account', methods=['GET'])
-def get_profile():
-    profile = users_collection.find_one({'pseudo': 'BP'})
-    return jsonify(profile), 200
+# @api.route('/api/account', methods=['GET'])
+# def get_profile():
+#     profile = users_collection.find_one({'pseudo': localStorage.getItem('pseudo')})
+#     return jsonify(profile), 200
+
+
+@api.route('/api/account', methods=['PUT'])
+def update():
+    data = request.get_json()
+    required_fields = ['pseudo', 'date_of_birth', 'password', 'addresse', 'job']
+    if not all(field in data for field in required_fields):
+        return jsonify({'error': 'Missing required fields'}), 400
+
+    user = {
+        'password': data['password'],
+        'date_of_birth': data['date_of_birth'],
+        'addresse': data['addresse'],
+        'job': data['job'],
+    }
+
+    result = users_collection.update_one({'pseudo': data['pseudo']}, {'$set': user})
+    return jsonify(), 200

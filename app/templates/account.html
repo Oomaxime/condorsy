@@ -7,13 +7,21 @@
 </head>
 <body>
   <h1>Account</h1>
-  <form action="" method="POST">
-    <input type="text" name="email" placeholder="Email" value="{{ profile.email }}">
-    <input type="text" name="date_of_birth" placeholder="Date de naissance" value="{{ profile.date_of_birth }}">
-    <input type="text" name="addresse" placeholder="Address" value="{{ profile.addresse }}">
-    <input type="text" name="job" placeholder="Job" value="{{ profile.job }}">
-    <input type="text" name="password" placeholder="Mot de Passe" value="{{ profile.password }}">
+  <form id="account-form" method="put">
+    <label for="date_naissance">Date de naissance</label>
+    <input type="text" id="date_naissance" name="date_naissance" required value="{{ profile.date_of_birth }}">
+    
+    <label for="addresse">Adresse</label>
+    <input type="text" id="addresse" name="addresse" required value="{{ profile.addresse }}">
+    
+    <label for="job">Métier</label>
+    <input type="text" id="job" name="job" required value="{{ profile.job }}">
+    
+    <label for="mot_de_passe">Mot de passe</label>
+    <input type="text" id="mot_de_passe" name="mot_de_passe" required value="{{ profile.password }}">
+
     <button type="submit">Modifier les infos</button>
   </form>
+  <script src="{{ url_for('static', filename='js/services/account.js') }}"></script>
 </body>
 </html>
