@@ -208,7 +208,7 @@ footer p {
   line-height: 24px;
   font-weight: 400;
   text-align: center;
-  color: #969696;
+  color: #012012;
   max-width: 350px;
 }
 .home-hero a {
@@ -251,7 +251,7 @@ footer p {
   background-image: url("../images/bg.svg");
   background-size: cover;
   background-position: center;
-  width: 60%;
+  width: 95%;
   height: 100vh;
   padding: 3rem;
   display: flex;
@@ -265,7 +265,6 @@ footer p {
   font-weight: 500;
   line-height: 70px;
   color: #080808;
-  margin-top: 20%;
 }
 
 .auth-layout .left h2 {
@@ -274,75 +273,6 @@ footer p {
   color: #080808;
   max-width: 350px;
   text-align: center;
-}
-
-.form-container {
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  gap: 2rem;
-  width: 300px;
-  margin: 0 auto;
-  padding-top: 10%;
-}
-
-.form-container form button:hover {
-  animation: vibrate 1.5s infinite;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  font-size: 1rem;
-  font-weight: 300;
-  margin-bottom: 0.2rem;
-  color: #111111;
-}
-
-.form-group input {
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid #080808;
-  padding: 4px 12px;
-}
-
-.form-error {
-  display: none;
-  color: red;
-  font-size: 0.8rem;
-  font-weight: 300;
-}
-
-.form-group input:focus {
-  outline: none;
-}
-
-.form-container .btn {
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.form-container a {
-  font-size: 0.8rem;
-  font-weight: 300;
-  color: #111111;
-  text-decoration: underline;
-}
-
-.form-container a:hover {
-  color: #080808;
-}
-
-.form-container h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #080808;
 }
 
 /* ==================== PAGE ACCOUNT ==================== */

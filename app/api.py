@@ -2,6 +2,11 @@ from flask import Blueprint, jsonify, request, make_response
 from app.models import surveys_collection, users_collection
 from datetime import datetime, timezone
 from flask_jwt_extended import create_access_token
+
+from "./static/algo/condorcy.py" import Condorcy
+from "./static/algo/majority.py" import Majority
+from "./static/algo/quantity_sort.py" import Quantity_Sort
+
 from app.queries import get_top_surveys_by_participants, get_votes_by_birth_year, get_average_choices
 from bson.objectid import ObjectId
 
@@ -16,12 +21,56 @@ def get_surveys():
         survey['_id'] = str(survey['_id'])
     return jsonify(surveys), 200
 
+# Récupérer les 10 surveys les plus recement ferme
+@api.route('/api/recentEndedSurveys', methods=['GET'])
+def get_recentEndedSurveys():
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    surveys = list(surveys_collection.find({
+        'date.end': {'$lte': current_date}
+    }).sort('date.create', -1).limit(10))
+    
+    for survey in surveys:
+        survey['_id'] = str(survey['_id'])
+    
+    return jsonify(surveys), 200
+
+
+# Récupérer les 10 surveys les plus recement update
+@api.route('/api/recentUpdateSurveys', methods=['GET'])
+def get_recentUpdatedSurveys():
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    surveys = list(surveys_collection.find({
+        'date.update': {'$lte': current_date}
+    }).sort('date.create', -1).limit(10))
+    
+    for survey in surveys:
+        survey['_id'] = str(survey['_id'])
+    
+    return jsonify(surveys), 200
+
+
+# Affiche les details d'un survey
+@api.route('/api/showSurvey', methods=['POST'])
+def showSurvey():
+    data = request.get_json()
+    
+    if not data:
+        return jsonify({'error': 'Invalid JSON format'}), 400
+    
+    survey = surveys_collection.findOne({
+        { "id" : data["id"] },
+        'id':1, 'description': 1, 'question': 1, 'results': 1
+    });
+    
+    return jsonify(surveys), 200
+
+
 
 # Créer un survey
-@api.route('/api/surveys', methods=['POST'])
+@api.route('/api/createSurveys', methods=['POST'])
 def create_survey():
     data = request.get_json()
-    required_fields = ['creator_id', 'question', 'choices', 'start_date', 'end_date']
+    required_fields = ['creator_id', 'question', 'choices', 'start_date', 'end_date', 'algo']
     if not all(field in data for field in required_fields):
         return jsonify({'error': 'Missing required fields'}), 400
 
@@ -33,7 +82,9 @@ def create_survey():
         'start_date': data['start_date'],
         'end_date': data['end_date'],
         'created_at': datetime.now(timezone.utc),
-        'responses': []
+        'responses': [],
+        'results': [],
+        'algo': data['algo']
     }
 
     result = surveys_collection.insert_one(survey)
@@ -64,6 +115,107 @@ def register():
 
     result = users_collection.insert_one(user)
     return jsonify({'id': str(result.inserted_id)}), 201
+
+
+# Calcule le resultat d'un survey
+@api.route('/api/calculateSurvey', methods=['POST'])
+def register():
+    data = request.get_json()
+    
+    if not data:
+        return jsonify({'error': 'Invalid JSON format'}), 400
+    
+    survey = surveys_collection.find_one({"id": data["id"]})
+    
+    if survey['date']['end'] >= datetime.now().strftime('%Y-%m-%d') :
+        
+        modifications = {
+            "$set" : {
+                "result" : None
+                }
+        }
+        
+        match survey['algo'] :
+            case 'condorcy' :
+                modifications['$set']["result"] = Condorcy(survey['responses'])
+            
+            case 'majority':
+                modifications['$set']["result"] = Majority(survey['responses'])
+            
+            case 'quantitySort':
+                modifications['$set']["result"] = Quantity_Sort(survey['responses'])
+
+        result = surveys_collectionresult = collection.update_one(
+            {"id": data["id"]},
+            modifications 
+        )
+        
+        return jsonify({'result': str(result)}), 201
+
+    else : 
+        return jsonify({'result': None, 'message': "Cannot unfold now since the end date has not been passed"}), 201
+    
+    
+    
+# Calcule le resultat d'un survey
+@api.route('/api/vote', methods=['POST'])
+def vote():
+    data = request.get_json() # data = {"id": id du survey, "data": {"response": input de l'user , "user_id': id de l'user}}
+    
+    if not data:
+        return jsonify({'error': 'Invalid JSON format'}), 400
+    
+    survey = surveys_collection.find_one({"id": data["id"]})
+    
+    now = datetime.now().strftime('%Y-%m-%d')
+    
+    if survey['date']['end'] < now and survey['date']['start'] >= now :
+        
+        
+        for response in survey['reponses'] :
+            if response["user_id"] = data['data']['user_id'] :
+                return jsonify({'result': None, "message" : "user already participated"}), 201
+        
+        
+        modifications = {
+            "$push" : {
+                "reponses" : data['data']
+                }
+        }
+        
+        return jsonify({'result': "data send successfully"}), 201
+
+    else : 
+        return jsonify({'result': None, 'message': "Cannot unfold now since the end date has been passed or the starting date hasn't started"}), 201
+
+
+
+@api.route('/api/modify', methods=['POST'])
+def modify():
+    data = request.get_json() # data = {"id": id du survey, "data": {"response": input de l'user {"description": str, "question": str, "choix": list} , "user_id': id de l'user}}
+    
+    if not data:
+        return jsonify({'error': 'Invalid JSON format'}), 400
+    
+    survey = surveys_collection.find_one({"id": data["id"]})
+    
+    now = datetime.now().strftime('%Y-%m-%d')
+    
+    if survey['date']['end'] < now and survey['date']['start'] < now :
+        if response["creator"]["user_id"]["$oid"] = data['data']['user_id'] :
+            return jsonify({'result': None, "message" : "user isn't the creator of the survey"}), 201
+        
+        data_to_modify = {k: v for k, v in data['data']['response'].items() if v is not None}
+            
+        modifications = {
+            "$set" : data_to_modify
+        }
+        
+        return jsonify({'result': "modification done successfully"}), 201
+
+    else : 
+        return jsonify({'result': None, 'message': "Cannot modify since the end date has been passed or the starting date has started"}), 201
+
 
 
 @api.route('/api/login', methods=['POST'])
