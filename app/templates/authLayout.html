@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/base.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/auth.css') }}"
+    />
+  </head>
+  <body>
+    <main class="auth-layout">
+      <div class="left">
+        <h1>Condorcy</h1>
+        <h2>
+          Create, vote and check resulte of an infinity of condorcy based survey
+        </h2>
+      </div>
+      {% block content %}{% endblock %}
+    </main>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

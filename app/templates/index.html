@@ -1,26 +1,23 @@
-{% extends "layout.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <section class="home-hero">
-  <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo Condorcy">
-  <h1>Condorsy</h1>
+  <img
+    src="{{ url_for('static', filename='images/logo.svg') }}"
+    alt="Logo Condorcy"
+  />
+  <h1>condorcy</h1>
   <h2>Your new voting app</h2>
   <p>Create, vote and check resulte of an infinity of Condorcet based survey</p>
-  <a href="/survey" class="btn">
-    Create survey !
-  </a>
+  <a href="/survey" class="btn"> Create survey ! </a>
 </section>
 
 <section class="home-carousel">
   <h3>Last Survey</h3>
   <div class="carousel">
     <h4>Latest created survey</h4>
-
   </div>
   <div class="carousel">
     <h4>latest active surveys</h4>
-
   </div>
 </section>
 
