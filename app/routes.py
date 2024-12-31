@@ -21,7 +21,7 @@ def account():
     if not profil:
         return "User not found", 404
     
-    return render_template('account.html', profile=profil)
+    return render_template('account.html',  title='account')
 
 @main_bp.route('/login')
 def login():
