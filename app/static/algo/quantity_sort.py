@@ -1,9 +1,9 @@
 results = [
-    {"choices":"A", "id":1},
-    {"choices":"B", "id":2},
-    {"choices":"B", "id":4},
-    {"choices":"C", "id":5},
-    {"choices":"C", "id":5},
+    {"reponse":"A", "id":1},
+    {"reponse":"B", "id":2},
+    {"reponse":"B", "id":4},
+    {"reponse":"C", "id":5},
+    {"reponse":"C", "id":5},
 ]
 
 choices = {}
@@ -16,10 +16,10 @@ def Quantity_Sort(results):
     final_results = {"winner":[],"looser":[]}
 
     for result in results :
-        if result["choices"] not in choices :
-            choices[result["choices"]] = 1
+        if result["v"] not in choices :
+            choices[result["reponse"]] = 1
         else :
-            choices[result["choices"]] += 1
+            choices[result["reponse"]] += 1
     
     for choice in choices :
         

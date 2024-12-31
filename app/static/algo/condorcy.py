@@ -1,7 +1,7 @@
 results = [
-    {"choices":["A","B","C",'D'], "id":1},
-    {"choices":["B","C","A",'D'], "id":2},
-    {"choices":["C",'D',"A","B"], "id":3},
+    {"reponse":["A","B","C",'D'], "id":1},
+    {"reponse":["B","C","A",'D'], "id":2},
+    {"reponse":["C",'D',"A","B"], "id":3},
 ]
 
 # Put it in a function
@@ -43,11 +43,11 @@ def Condorcy(results) :
 
     for result in results :
         cursor_start = 0
-        end = len(result['choices'])
+        end = len(result['reponse'])
         while cursor_start < end - 1 :
-            for cursor_end in range(cursor_start + 1,len(result['choices'])) :
-                    result_start = result['choices'][cursor_start]
-                    result_end = result['choices'][cursor_end]
+            for cursor_end in range(cursor_start + 1,len(result['reponse'])) :
+                    result_start = result['reponse'][cursor_start]
+                    result_end = result['reponse'][cursor_end]
 
                     if isinstance(result_start, list) and isinstance(result_end, list) : 
                         for ele_start in result_start :

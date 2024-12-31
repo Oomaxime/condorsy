@@ -45,8 +45,26 @@ def get_recentUpdatedSurveys():
     
     return jsonify(surveys), 200
 
+
+# Affiche les details d'un survey
+@api.route('/api/showSurvey', methods=['POST'])
+def showSurvey():
+    data = request.get_json()
+    
+    if not data:
+        return jsonify({'error': 'Invalid JSON format'}), 400
+    
+    survey = surveys_collection.findOne({
+        { "id" : data["id"] },
+        'id':1, 'description': 1, 'question': 1, 'results': 1
+    });
+    
+    return jsonify(surveys), 200
+
+
+
 # Créer un survey
-@api.route('/api/surveys', methods=['POST'])
+@api.route('/api/createSurveys', methods=['POST'])
 def create_survey():
     data = request.get_json()
     required_fields = ['creator_id', 'question', 'choices', 'start_date', 'end_date', 'algo']
@@ -133,6 +151,68 @@ def register():
 
     else : 
         return jsonify({'result': None, 'message': "Cannot unfold now since the end date has not been passed"}), 201
+    
+    
+    
+# Calcule le resultat d'un survey
+@api.route('/api/vote', methods=['POST'])
+def vote():
+    data = request.get_json() # data = {"id": id du survey, "data": {"response": input de l'user , "user_id': id de l'user}}
+    
+    if not data:
+        return jsonify({'error': 'Invalid JSON format'}), 400
+    
+    survey = surveys_collection.find_one({"id": data["id"]})
+    
+    now = datetime.now().strftime('%Y-%m-%d')
+    
+    if survey['date']['end'] < now and survey['date']['start'] >= now :
+        
+        
+        for response in survey['reponses'] :
+            if response["user_id"] = data['data']['user_id'] :
+                return jsonify({'result': None, "message" : "user already participated"}), 201
+        
+        
+        modifications = {
+            "$push" : {
+                "reponses" : data['data']
+                }
+        }
+        
+        return jsonify({'result': "data send successfully"}), 201
+
+    else : 
+        return jsonify({'result': None, 'message': "Cannot unfold now since the end date has been passed or the starting date hasn't started"}), 201
+
+
+
+@api.route('/api/modify', methods=['POST'])
+def modify():
+    data = request.get_json() # data = {"id": id du survey, "data": {"response": input de l'user {"description": str, "question": str, "choix": list} , "user_id': id de l'user}}
+    
+    if not data:
+        return jsonify({'error': 'Invalid JSON format'}), 400
+    
+    survey = surveys_collection.find_one({"id": data["id"]})
+    
+    now = datetime.now().strftime('%Y-%m-%d')
+    
+    if survey['date']['end'] < now and survey['date']['start'] < now :
+        if response["creator"]["user_id"]["$oid"] = data['data']['user_id'] :
+            return jsonify({'result': None, "message" : "user isn't the creator of the survey"}), 201
+        
+        data_to_modify = {k: v for k, v in data['data']['response'].items() if v is not None}
+            
+        modifications = {
+            "$set" : data_to_modify
+        }
+        
+        return jsonify({'result': "modification done successfully"}), 201
+
+    else : 
+        return jsonify({'result': None, 'message': "Cannot modify since the end date has been passed or the starting date has started"}), 201
+
 
 
 @api.route('/api/login', methods=['POST'])
