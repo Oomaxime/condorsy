@@ -1,16 +1,4 @@
-results = [
-    {"reponse":"A", "id":1},
-    {"reponse":"B", "id":2},
-    {"reponse":"B", "id":4},
-    {"reponse":"C", "id":5},
-    {"reponse":"C", "id":5},
-]
-
 choices = {}
-
-test = [{"test":"test"}]
-
-# Output can be change if needed
 
 def Quantity_Sort(results):
     final_results = {"winner":[],"looser":[]}
