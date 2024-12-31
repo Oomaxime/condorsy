@@ -31,7 +31,7 @@ def Majority(results):
     return final_results #the results to send back
 
 
-majority(results)
+Majority(results)
     
 
     

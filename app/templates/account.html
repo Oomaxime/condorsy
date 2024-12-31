@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+        <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/account.css') }}"
+    />
+</head>
+
+<body>
+  <h1>Votre Account</h1>
+  <form id="account-form" method="put">
+    <label for="date_naissance">Date de naissance</label>
+    <input type="date" id="date_naissance" name="date_naissance" required>
+
+    <label for="addresse">Adresse</label>
+    <input type="text" id="addresse" name="addresse" required>
+
+    <label for="job">Métier</label>
+    <input type="text" id="job" name="job" required>
+
+    <label for="mot_de_passe">Mot de passe</label>
+    <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+
+    <button type="submit">Modifier les infos</button>
+  </form>
+<form id="delete-form" method="delete">
+    <button type="submit">Supprimer le compte</button>
+</form>
+  <script src="{{ url_for('static', filename='js/services/account.js') }}"></script>
+</body>
+</html>
