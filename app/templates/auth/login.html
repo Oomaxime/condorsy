@@ -1,24 +1,30 @@
 {% extends "authLayout.html" %} {% block content %}
-<div class="form-container">
-  <h3>Login</h3>
-
-  <form id="login-form" class="form" method="post">
-    <div class="form-group">
-      <label for="pseudo">Nom d'utilisateur</label>
-      <input type="text" id="pseudo" name="pseudo" required />
-    </div>
-
-    <div class="form-group">
-      <label for="password">Mot de passe</label>
-      <input type="password" id="password" name="password" required />
-    </div>
-
-    <div class="form-error" style="display: none"></div>
-
-    <button type="submit" class="btn btn-primary">Se connecter</button>
-  </form>
-
-  <a href="{{ url_for('main.register') }}">Créer un compte</a>
+<div class="right">
+  <div class="form-container">
+    <h3>Welcome Back 👋</h3>
+    <h4>Today is a new day. It's your day. You shape it.<br />
+      Sign in to start create your <span>Survey</span>.</h4>
+  
+    <form id="login-form" class="form" method="post">
+      <div class="form-group">
+        <label for="pseudo">Nom d'utilisateur</label>
+        <input type="text" id="pseudo" name="pseudo" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+  
+      <div class="form-error"></div>
+  
+      <div class="center">
+        <button type="submit" class="btn btn-primary">Se connecter</button>
+      </div>
+    </form>
+  
+    <a href="{{ url_for('main.register') }}">Créer un compte</a>
+  </div>
 </div>
 {% endblock %} {% block extra_js %}
 <script src="{{ url_for('static', filename='js/services/auth.service.js') }}"></script>
