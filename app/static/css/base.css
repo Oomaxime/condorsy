@@ -108,7 +108,7 @@ header .nav-right {
 }
 
 header .nav-right a {
-  background-color: var(--color-green);
+  background-color: var(--primary-color);
   color: #000;
 }
 
@@ -294,7 +294,137 @@ footer p {
   animation: vibrate 1.5s infinite;
 }
 
-/* ==================== PAGE ACCOUNT ==================== */
+/* ==================== PAGE CREATE SURVEY ==================== */
+/* SURVEYS */
+
+.survey-create {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.survey-create .form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+.survey-create h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.survey-create .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.survey-create .form-group label {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.survey-create .form-group input,
+.survey-create .form-group textarea {
+  appearance: none;
+  outline: none;
+  border: 0;
+  background-color: #f7fbff;
+  font-size: 1rem;
+  padding: .75rem;
+  border-radius: .5rem;
+  border: 2px solid #d4d7e3;
+}
+
+.survey-create .form-group input:focus,
+.survey-create .form-group textarea:focus {
+  border-color: var(--primary-color);
+}
+
+.survey-create .form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.survey-create .choice-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#choices-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.survey-create .choice-inputs input {
+  padding: .75rem;
+  border-radius: .5rem;
+  border: 2px solid #d4d7e3;
+  background-color: #f7fbff;
+}
+
+.survey-create #add-choice {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border-radius: .5rem;
+  background-color: #e0e4eb;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  color: #333;
+}
+
+.survey-create #add-choice:hover {
+  background-color: #d4d7e3;
+}
+
+.survey-create button[type="submit"] {
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: .5rem;
+  cursor: pointer;
+}
+
+.survey-create button[type="submit"]:hover {
+  background-color: #1cb17a;
+}
+
+.survey-create .form-error {
+  min-height: 1.1rem;
+  color: #ff0000;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.survey-create .center {
+  text-align: center;
+}
+
+.survey-create .center .btn {
+  width: 100%;
+}
+
+.survey-create a {
+  text-align: center;
+}
+
+.survey-create a:hover {
+  text-decoration: underline;
+}
+
 
 /* ====================== MEDIA QUERIES ======================== */
 
@@ -322,3 +452,4 @@ footer p {
 @media screen and (max-width: 480px) {
 
 }
+
