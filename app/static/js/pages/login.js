@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await AuthService.login(pseudo, password);
       if (response.token) {
-        window.location.href = "/home";
+        window.location.href = "/account";
         console.log(response);
       }
     } catch (error) {

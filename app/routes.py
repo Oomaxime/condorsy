@@ -16,11 +16,7 @@ def create_survey():
     return render_template('surveys/create.html')
 
 @main_bp.route('/account')
-def account():    
-    profil = users_collection.find_one({'pseudo': 'BP'})
-    if not profil:
-        return "User not found", 404
-    
+def account():        
     return render_template('account.html',  title='account')
 
 @main_bp.route('/login')

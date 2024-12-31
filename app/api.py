@@ -160,3 +160,42 @@ def delete_survey():
     except Exception as e:
         print(f"Erreur lors de la suppression du scrutin : {e}")
         return jsonify({"error": "An error occurred"}), 500
+
+
+@api.route('/api/account/<pseudo>', methods=['GET'])
+def get_user(pseudo):
+    try:
+        user = users_collection.find_one({'pseudo': pseudo})
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+
+        user['_id'] = str(user['_id'])  # Convertir ObjectId en chaîne de caractères
+        return jsonify(user), 200
+    except Exception as e:
+        print(f"Erreur lors de la récupération de l'utilisateur : {e}")
+        return jsonify({'error': 'Internal Server Error'}), 500
+   
+    
+@api.route('/api/account', methods=['PUT'])
+def update_user():
+    try:
+        data = request.get_json()
+        required_fields = ['pseudo', 'date_of_birth', 'password', 'addresse', 'job']
+        if not all(field in data for field in required_fields):
+            return jsonify({'error': 'Missing required fields'}), 400
+
+        user = {
+            'password': data['password'],
+            'date_of_birth': data['date_of_birth'],
+            'addresse': data['addresse'],
+            'job': data['job'],
+        }
+
+        result = users_collection.update_one({'pseudo': data['pseudo']}, {'$set': user})
+        if result.modified_count == 0:
+            return jsonify({'error': 'No document found or no changes made'}), 404
+
+        return jsonify({'modified_count': result.modified_count}), 200
+    except Exception as e:
+        print(f"Erreur lors du traitement de la requête: {e}")
+        return jsonify({'error': 'Internal Server Error'}), 500

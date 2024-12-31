@@ -1,11 +1,28 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const accountForm = document.getElementById("account-form");
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  try {
+    const response = await fetch(`/api/account/${user.pseudo}`);
+    if (!response.ok) {
+      throw new Error("Erreur lors de la récupération des données de l'utilisateur");
+    }
+
+    const userData = await response.json();
+    console.log(userData);
+
+    accountForm.date_naissance.value = userData.date_of_birth || '';
+    accountForm.addresse.value = userData.addresse || '';
+    accountForm.job.value = userData.job || '';
+    accountForm.mot_de_passe.value = userData.password || '';
+  } catch (error) {
+    console.error("Erreur lors de la récupération des données de l'utilisateur :", error);
+  }
 
   accountForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     console.log("Soumission du formulaire capturée !");
 
-    const pseudo = localStorage.getItem('user');
     const date_naissance = accountForm.date_naissance.value;
     const addresse = accountForm.addresse.value;
     const job = accountForm.job.value;
@@ -19,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
           "Cache-Control": "no-cache",
         },
         body: JSON.stringify({
-          pseudo,
+          pseudo: user.pseudo,
           date_of_birth: date_naissance,
           addresse,
           job,
@@ -33,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await response.json();
       console.log("Profil mis à jour avec succès:", data);
-      // window.location.href = "/";
+      // window.location.href = "/account";
     } catch (error) {
       console.error("Erreur lors de la mise à jour du profil:", error);
     }
