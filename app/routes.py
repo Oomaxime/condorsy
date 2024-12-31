@@ -26,3 +26,7 @@ def login():
 @main_bp.route('/dashboard')
 def dashboard():
     return render_template('dashboard.html', title='dashboard')
+
+@main_bp.route('/home')
+def accueil():        
+    return render_template('home.html',  title='account')

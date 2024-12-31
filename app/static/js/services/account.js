@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const accountForm = document.getElementById("account-form");
   const user = JSON.parse(localStorage.getItem('user'));
 
+  const deleteForm = document.getElementById("delete-form");
+
   try {
     const response = await fetch(`/api/account/${user.pseudo}`);
     if (!response.ok) {
@@ -55,4 +57,32 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error("Erreur lors de la mise à jour du profil:", error);
     }
   });
+
+  deleteForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const suppresion_c = confirm("Vous êtes sur le point de supprimer votre compte. Êtes-vous sûr de vouloir continuer ?");
+  
+    if (suppresion_c) {
+      try {
+        const response = await fetch("/api/account", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+          },
+          body: JSON.stringify({
+            pseudo: user.pseudo,
+          }),
+        });
+  
+        const data = await response.json();
+        console.log("Compte supprimé avec succès:", data);
+        localStorage.removeItem('user');
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Erreur lors de la suppression du compte:", error);
+      }
+    }
+  });
 });
+

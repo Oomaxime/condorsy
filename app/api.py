@@ -199,3 +199,25 @@ def update_user():
     except Exception as e:
         print(f"Erreur lors du traitement de la requête: {e}")
         return jsonify({'error': 'Internal Server Error'}), 500
+    
+    
+@api.route('/api/account', methods=['DELETE'])
+def delete_user():
+    try:
+        data = request.get_json()
+        required_fields = ['pseudo']
+        if not all(field in data for field in required_fields):
+            return jsonify({'error': 'Missing required fields'}), 400
+
+        users_collection.update_one({'pseudo': data['pseudo']}, {'$set': {'password': '',
+            'date_of_birth': '',
+            'password': '',
+            'addresse': '',
+            'job': '',
+            'admin': False}})
+
+        return jsonify({'utilisateur effacé'}), 200
+    
+    except Exception as e:
+        print(f"Erreur lors du traitement de la requête: {e}")
+        return jsonify({'error': 'Internal Server Error'}), 500
