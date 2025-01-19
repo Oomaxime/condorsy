@@ -1,136 +1,92 @@
-/* Reset CSS */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+    /* Base */
+    --font-family: "Inter", sans-serif;
+    --font-size: 16px;
+    --primary-color: #4caf50;
+    --secondary-color: #ffffff;
+    --background-color: #f8f9fa;
+    --border-color: #ddd;
+    --text-color: #333;
+    --text-light-color: #555;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
-    line-height: 1.6;
-    padding: 20px;
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
-h1, h2 {
+h1 {
+    font-size: 2rem;
+    color: var(--primary-color);
     text-align: center;
-    margin-bottom: 20px;
+    margin: 1rem 0;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
 }
 
 table {
-    width: 100%;
+    width: 90%;
+    margin: 1.5rem auto;
     border-collapse: collapse;
-    margin-bottom: 20px;
-    background: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
     overflow: hidden;
+    box-shadow: var(--box-shadow);
 }
 
-th, td {
+table th, 
+table td {
+    padding: 1rem;
     text-align: left;
-    padding: 12px 15px;
+    border-bottom: 1px solid var(--border-color);
 }
 
-th {
-    background-color: #333;
-    color: #fff;
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-tr:hover {
-    background-color: #f1f1f1;
-}
-
-button {
-    padding: 8px 12px;
-    background-color: #e63946;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #d62839;
-}
-
-canvas {
-    max-width: 100%;
-    margin: 0 auto;
-    display: block;
-}
-
-label {
-    display: block;
-    margin-bottom: 10px;
+table th {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
     font-weight: bold;
 }
 
-#surveySelector {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+table tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
-/* Section des graphiques */
-.chart-container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin: 20px auto;
+table td {
+    font-size: 1rem;
 }
 
-canvas {
-    max-width: 100%;
-    height: 400px;
-    margin: 0 auto;
-    display: block;
+#surveyList tr:last-child td {
+    border-bottom: none;
 }
 
-/* Pour le select */
-#surveySelector {
-    width: calc(100% - 40px);
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
+select,
+button {
+    font-family: var(--font-family);
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    outline: none;
+    cursor: pointer;
 }
 
-/* Centrage du texte des titres */
-.chart-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 18px;
-    color: #333;
+select:focus,
+button:focus {
+    border-color: var(--primary-color);
 }
 
-/* Responsive pour mobiles */
-@media (max-width: 768px) {
-    .chart-container {
-        padding: 15px;
-    }
-
-    canvas {
-        height: 300px;
-    }
-
-    #surveySelector {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    .chart-container h2 {
-        font-size: 16px;
-    }
+select:hover,
+button:hover {
+    background-color: red;
+    color: white;
 }
