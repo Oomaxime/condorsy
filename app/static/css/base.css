@@ -238,6 +238,38 @@ footer p {
   line-height: 24px;
 }
 
+.home-carousel .carousel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.home-carousel .carousel .container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.home-carousel .carousel .container .card {
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.home-carousel .carousel .container .card .card_content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 /* ==================== PAGE LOGIN ==================== */
 .auth-layout {
   height: 100%;
@@ -276,6 +308,99 @@ footer p {
 }
 
 /* ==================== PAGE ACCOUNT ==================== */
+
+
+
+
+
+
+
+
+/* ==================== PAGE SURVEY CREATE ==================== */
+
+.survey-create {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: var(--color-secondary);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.survey-create h1 {
+  font-size: 2rem;
+  color: var(--color-green);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.survey-create .form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.survey-create .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.survey-create label {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.survey-create input[type="text"],
+.survey-create textarea {
+  appearance: none;
+  outline: none;
+  background-color: #f7fbff;
+  font-size: 1rem;
+  padding: .75rem;
+  border-radius: .5rem;
+  border: 2px solid #d4d7e3;
+}
+
+.survey-create input[type="text"]:focus,
+.survey-create textarea:focus {
+  border-color: var(--primary-color);
+}
+
+.survey-create textarea {
+  resize: vertical;
+}
+
+.survey-create .btn-primary {
+  cursor: pointer;
+  width: 100%;
+  max-width: 100%!important;
+}
+
+.survey-create #choices-container {
+  position: relative;
+}
+
+.survey-create .choice-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.survey-create .choice-inputs input {
+  width: 100%;
+}
+
+.survey-create .btn-primary {
+  align-self: center;
+  width: 100%;
+  max-width: 300px;
+}
+
+
+
+
+
 
 /* ====================== MEDIA QUERIES ======================== */
 
