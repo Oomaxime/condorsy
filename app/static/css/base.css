@@ -238,6 +238,38 @@ footer p {
   line-height: 24px;
 }
 
+.home-carousel .carousel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.home-carousel .carousel .container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.home-carousel .carousel .container .card {
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.home-carousel .carousel .container .card .card_content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 /* ==================== PAGE LOGIN ==================== */
 .auth-layout {
   height: 100%;
